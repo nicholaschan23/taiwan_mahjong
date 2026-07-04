@@ -72,6 +72,97 @@
           </div>
         </div>
 
+        <!-- Collapsible Basics -->
+        <details class="basics-accordion" data-search="basics mahjong tiles suits honors winds dragons flowers chi peng gang meld draw discard wall">
+          <summary class="basics-toggle">New to Mahjong? Review the basics</summary>
+          <div class="basics-content">
+            <div class="rule-row">
+              <div class="rule-label">Tiles <span class="tag tag-gray">牌 Pái</span></div>
+              <div class="rule-body">
+                4 players, 144 tiles. Three numbered suits (1–9, ×4 each):
+                <div class="hand-tiles" style="margin: 8px 0">
+                  <div class="meld-group">
+                    <div class="t">一</div><div class="t">二</div><div class="t">三</div><div class="t">四</div><div class="t">五</div><div class="t">六</div><div class="t">七</div><div class="t">八</div><div class="t">九</div>
+                  </div>
+                </div>
+                <strong>萬子 Wàn Zi</strong> (Characters) · <strong>筒子 Tǒng Zi</strong> (Dots) · <strong>條子 Tiáo Zi</strong> (Bamboo)<br>
+                Plus honor tiles:
+                <div class="hand-tiles" style="margin: 8px 0">
+                  <div class="meld-group">
+                    <div class="t wind">東</div><div class="t wind">南</div><div class="t wind">西</div><div class="t wind">北</div>
+                  </div>
+                  <div class="meld-sep"></div>
+                  <div class="meld-group">
+                    <div class="t red">中</div><div class="t grn">發</div><div class="t">白</div>
+                  </div>
+                </div>
+                <strong>風牌 Fēng Pái</strong> (Winds) · <strong>三元牌 Sān Yuán Pái</strong> (Dragons)<br>
+                And 8 bonus tiles: <strong>花牌 Huā Pái</strong> (4 Flowers + 4 Seasons).
+              </div>
+            </div>
+            <div class="rule-row">
+              <div class="rule-label">The Wall <span class="tag tag-gray">牌牆 Pái Qiáng</span></div>
+              <div class="rule-body">
+                Tiles are shuffled face-down into a square wall. Each player is dealt <strong>16 tiles</strong> (dealer goes first). The remaining tiles form the draw wall.
+              </div>
+            </div>
+            <div class="rule-row">
+              <div class="rule-label">Turn Flow <span class="tag tag-gray">出牌 Chū Pái</span></div>
+              <div class="rule-body">
+                On your turn: <strong>摸牌 Mō Pái</strong> (draw 1 tile from the wall), then <strong>打牌 Dǎ Pái</strong> (discard 1 tile face-up). Play proceeds counter-clockwise until someone wins or the wall is exhausted (<strong>流局 Liú Jú</strong> — draw game).
+              </div>
+            </div>
+            <div class="rule-row">
+              <div class="rule-label">Melds <span class="tag tag-gray">面子 Miàn Zi</span></div>
+              <div class="rule-body">
+                <strong>吃 Chī</strong> — sequence of 3 consecutive tiles in one suit. Can only claim from the player to your left.
+                <div class="hand-tiles" style="margin: 6px 0">
+                  <div class="meld-group"><div class="t">二</div><div class="t">三</div><div class="t">四</div></div>
+                </div>
+                <strong>碰 Pèng</strong> — triplet of 3 identical tiles. Can claim from any player's discard.
+                <div class="hand-tiles" style="margin: 6px 0">
+                  <div class="meld-group"><div class="t">七</div><div class="t">七</div><div class="t">七</div></div>
+                </div>
+                <strong>槓 Gàng</strong> — quad of 4 identical tiles. Declared openly or concealed; draw a replacement tile after.
+                <div class="hand-tiles" style="margin: 6px 0">
+                  <div class="meld-group"><div class="t red">中</div><div class="t red">中</div><div class="t red">中</div><div class="t red">中</div></div>
+                </div>
+              </div>
+            </div>
+            <div class="rule-row">
+              <div class="rule-label">Claiming Priority <span class="tag tag-gray">搶牌 Qiǎng Pái</span></div>
+              <div class="rule-body">
+                <strong>胡 Hú</strong> (Win) > <strong>槓 Gàng</strong> / <strong>碰 Pèng</strong> > <strong>吃 Chī</strong>. If multiple players want the same discard, higher priority wins. A win claim always takes precedence.
+              </div>
+            </div>
+            <div class="rule-row">
+              <div class="rule-label">Winning <span class="tag tag-gray">胡牌 Hú Pái</span></div>
+              <div class="rule-body">
+                Complete a legal hand of <strong>5 melds + 1 pair</strong> (17 tiles total). Win by claiming a discard or drawing the tile yourself. Declare "胡!" (Hú) to win.
+                <div class="hand-tiles" style="margin: 8px 0">
+                  <div class="meld-group"><div class="t">一</div><div class="t">二</div><div class="t">三</div></div>
+                  <div class="meld-sep"></div>
+                  <div class="meld-group"><div class="t">五</div><div class="t">六</div><div class="t">七</div></div>
+                  <div class="meld-sep"></div>
+                  <div class="meld-group"><div class="t">九</div><div class="t">九</div><div class="t">九</div></div>
+                  <div class="meld-sep"></div>
+                  <div class="meld-group"><div class="t wind">東</div><div class="t wind">東</div><div class="t wind">東</div></div>
+                  <div class="meld-sep"></div>
+                  <div class="meld-group"><div class="t">四</div><div class="t">五</div><div class="t">六</div></div>
+                  <div class="meld-sep"></div>
+                  <div class="meld-group"><div class="t pair">三</div><div class="t pair">三</div></div>
+                </div>
+              </div>
+            </div>
+            <div class="rule-row" style="border-bottom: none">
+              <div class="rule-label">Flowers <span class="tag tag-gray">花牌 Huā Pái</span></div>
+              <div class="rule-body">
+                Bonus tiles. When drawn, immediately set aside face-up and draw a replacement tile. They don't form melds but score bonus Tai (see Seat &amp; Flower section below).
+              </div>
+            </div>
+          </div>
+        </details>
+
         <!-- Section 1: Mechanics -->
         <div class="section">
           <div class="section-header">
@@ -80,13 +171,11 @@
 
           <div
             class="rule-row"
-            data-search="hand structure 16 tiles melds pair winning"
+            data-search="hand structure 16 tiles winning 17th tile payout"
           >
-            <div class="rule-label">Hand Structure</div>
+            <div class="rule-label">Winning Tile</div>
             <div class="rule-body">
-              A winning hand is <strong>17 tiles</strong> — 5 melds of 3 tiles
-              each, plus 1 pair. You hold 16 and win on the 17th drawn or
-              discarded tile.
+              You hold 16 tiles and win on the <strong>17th tile</strong> — either drawn from the wall or claimed from a discard. How you get it determines who pays.
             </div>
           </div>
 
@@ -106,7 +195,7 @@
             data-search="discard win fang chong single player pays full"
           >
             <div class="rule-label">
-              Win by Discard <span class="tag tag-gray">放銃</span>
+              Win by Discard <span class="tag tag-gray">放銃 Fàng Chòng</span>
             </div>
             <div class="rule-body">
               The player who discards the winning tile pays the
@@ -120,7 +209,7 @@
             data-search="self draw zi mo all three opponents pay triple earnings"
           >
             <div class="rule-label">
-              Win by Self-Draw <span class="tag tag-gray">自摸</span>
+              Win by Self-Draw <span class="tag tag-gray">自摸 Zì Mō</span>
             </div>
             <div class="rule-body">
               You draw the winning tile yourself.
@@ -141,7 +230,7 @@
             data-search="dealer zhuang jia advantage +1 tai bonus"
           >
             <div class="rule-label">
-              Dealer Advantage <span class="tag tag-gold">莊家</span>
+              Dealer Advantage <span class="tag tag-gold">莊家 Zhuāng Jiā</span>
             </div>
             <div class="rule-body">
               The active dealer always adds
@@ -156,7 +245,7 @@
             data-search="dealer streak la zhuang consecutive bonus 2n+1 formula"
           >
             <div class="rule-label">
-              Dealer Streaks <span class="tag tag-gray">拉莊</span>
+              Dealer Streaks <span class="tag tag-gray">拉莊 Lā Zhuāng</span>
             </div>
             <div class="rule-body">
               Every consecutive hand the dealer wins or draws, a streak bonus of
@@ -194,36 +283,34 @@
                 <tr>
                   <td><strong>1</strong></td>
                   <td>
-                    <span class="wind-sym" style="color: #2b4c8c">東</span> East
+                    <span class="wind-sym" style="color: #2b4c8c">東</span> Dōng (East)
                   </td>
-                  <td>梅 Plum [#1]</td>
-                  <td>春 Spring [#1]</td>
+                  <td>梅 Méi (Plum)</td>
+                  <td>春 Chūn (Spring)</td>
                 </tr>
                 <tr>
                   <td><strong>2</strong></td>
                   <td>
-                    <span class="wind-sym" style="color: #2b4c8c">南</span>
-                    South
+                    <span class="wind-sym" style="color: #2b4c8c">南</span> Nán (South)
                   </td>
-                  <td>蘭 Orchid [#2]</td>
-                  <td>夏 Summer [#2]</td>
+                  <td>蘭 Lán (Orchid)</td>
+                  <td>夏 Xià (Summer)</td>
                 </tr>
                 <tr>
                   <td><strong>3</strong></td>
                   <td>
-                    <span class="wind-sym" style="color: #2b4c8c">西</span> West
+                    <span class="wind-sym" style="color: #2b4c8c">西</span> Xī (West)
                   </td>
-                  <td>菊 Chrysanthemum [#3]</td>
-                  <td>秋 Autumn [#3]</td>
+                  <td>菊 Jú (Chrysanthemum)</td>
+                  <td>秋 Qiū (Autumn)</td>
                 </tr>
                 <tr>
                   <td><strong>4</strong></td>
                   <td>
-                    <span class="wind-sym" style="color: #2b4c8c">北</span>
-                    North
+                    <span class="wind-sym" style="color: #2b4c8c">北</span> Běi (North)
                   </td>
-                  <td>竹 Bamboo [#4]</td>
-                  <td>冬 Winter [#4]</td>
+                  <td>竹 Zhú (Bamboo)</td>
+                  <td>冬 Dōng (Winter)</td>
                 </tr>
               </tbody>
             </table>
@@ -290,7 +377,7 @@
           >
             <div class="rule-row">
               <div class="rule-label">
-                Fake Win <span class="tag tag-red">詐胡</span>
+                Fake Win <span class="tag tag-red">詐胡 Zhà Hú</span>
               </div>
               <div class="rule-body">
                 Declaring "Hu!" with an illegal hand or below the minimum Tai.
@@ -309,7 +396,7 @@
           >
             <div class="rule-row">
               <div class="rule-label">
-                Short / Long Hand <span class="tag tag-red">相公</span>
+                Short / Long Hand <span class="tag tag-red">相公 Xiāng Gōng</span>
               </div>
               <div class="rule-body">
                 Holding fewer or more than 16 tiles before winning.

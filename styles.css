@@ -262,6 +262,45 @@ mark {
   line-height: 1.6;
 }
 
+/* ── Basics accordion ─────────────────────────── */
+.basics-accordion {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 28px;
+  overflow: hidden;
+}
+.basics-toggle {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-2);
+  cursor: pointer;
+  background: var(--bg-subtle);
+  list-style: none;
+  transition: background 0.12s;
+}
+.basics-toggle::-webkit-details-marker {
+  display: none;
+}
+.basics-toggle::before {
+  content: "▸";
+  margin-right: 8px;
+  font-size: 11px;
+  transition: transform 0.15s;
+}
+.basics-accordion[open] .basics-toggle::before {
+  transform: rotate(90deg);
+}
+.basics-toggle:hover {
+  background: var(--bg-rule);
+}
+.basics-content {
+  padding: 0 16px 4px;
+  border-top: 1px solid var(--border);
+}
+
 /* ── Section blocks ───────────────────────────── */
 .content {
   counter-reset: section;
