@@ -1,0 +1,2260 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Taiwan Mahjong · 16-Tile Rules</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #ffffff;
+        --bg-subtle: #f7f7f5;
+        --bg-rule: #f2f1ef;
+        --border: #e0ddd8;
+        --border-md: #ccc9c2;
+        --text: #111110;
+        --text-2: #4a4845;
+        --text-3: #8a8782;
+        --accent: #c0392b;
+        --accent-bg: #fdf2f1;
+        --accent-bd: #f0c4bf;
+        --gold: #b07d2e;
+        --gold-bg: #fdf8ee;
+        --gold-bd: #e8d5a0;
+        --green: #2d6a4f;
+        --radius: 8px;
+        --radius-sm: 4px;
+        --max-w: 680px;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+        font-size: 14px;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      /* ── Page routing ─────────────────────────────── */
+      .page {
+        display: none;
+      }
+      .page.active {
+        display: block;
+      }
+
+      /* ── Navigation ───────────────────────────────── */
+      nav {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(255, 255, 255, 0.96);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-inner {
+        max-width: var(--max-w);
+        margin: 0 auto;
+        padding: 0 20px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        height: 50px;
+      }
+      .nav-logo {
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: -0.2px;
+        color: var(--text);
+        margin-right: auto;
+        cursor: pointer;
+        user-select: none;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+      }
+      .nav-logo-mark {
+        width: 22px;
+        height: 22px;
+        background: var(--accent);
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 12px;
+        font-weight: 800;
+        flex-shrink: 0;
+      }
+      .nav-btn {
+        background: none;
+        border: none;
+        color: var(--text-3);
+        font-family: inherit;
+        font-size: 13px;
+        font-weight: 500;
+        padding: 5px 11px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition:
+          color 0.12s,
+          background 0.12s;
+      }
+      .nav-btn:hover {
+        color: var(--text);
+        background: var(--bg-subtle);
+      }
+      .nav-btn.active {
+        color: var(--text);
+        background: var(--bg-rule);
+        font-weight: 600;
+      }
+
+      /* ── Search ───────────────────────────────────── */
+      .search-wrap {
+        padding: 16px 20px 0;
+        max-width: var(--max-w);
+        margin: 0 auto;
+      }
+      .search-box {
+        position: relative;
+      }
+      .search-box input {
+        width: 100%;
+        background: var(--bg-subtle);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 9px 36px 9px 36px;
+        color: var(--text);
+        font-family: inherit;
+        font-size: 13.5px;
+        outline: none;
+        transition:
+          border-color 0.15s,
+          box-shadow 0.15s;
+      }
+      .search-box input::placeholder {
+        color: var(--text-3);
+      }
+      .search-box input:focus {
+        border-color: var(--text-3);
+        background: var(--bg);
+        box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+      }
+      .search-icon {
+        position: absolute;
+        left: 11px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--text-3);
+        font-size: 14px;
+        pointer-events: none;
+      }
+      .search-clear {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: var(--text-3);
+        font-size: 18px;
+        cursor: pointer;
+        line-height: 1;
+        display: none;
+        padding: 2px 4px;
+      }
+      .search-clear:hover {
+        color: var(--text);
+      }
+
+      /* ── Search results ───────────────────────────── */
+      #search-results {
+        display: none;
+        max-width: var(--max-w);
+        margin: 0 auto;
+        padding: 8px 20px 20px;
+      }
+      #search-results.visible {
+        display: block;
+      }
+      .search-count {
+        color: var(--text-3);
+        font-size: 12px;
+        margin-bottom: 8px;
+      }
+      .search-hit {
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 12px 14px;
+        margin-bottom: 6px;
+        cursor: pointer;
+        transition:
+          border-color 0.12s,
+          background 0.12s;
+        background: var(--bg);
+      }
+      .search-hit:hover {
+        border-color: var(--border-md);
+        background: var(--bg-subtle);
+      }
+      .search-hit-tag {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
+        color: var(--text-3);
+        margin-bottom: 3px;
+      }
+      .search-hit-title {
+        font-weight: 600;
+        font-size: 13.5px;
+        margin-bottom: 2px;
+      }
+      .search-hit-snippet {
+        font-size: 12.5px;
+        color: var(--text-2);
+        line-height: 1.5;
+      }
+      mark {
+        background: #fff3a8;
+        color: #6b5600;
+        border-radius: 2px;
+        padding: 0 1px;
+      }
+
+      /* ── Content ──────────────────────────────────── */
+      .content {
+        max-width: var(--max-w);
+        margin: 0 auto;
+        padding: 28px 20px 80px;
+      }
+
+      /* ── Page header ──────────────────────────────── */
+      .page-header {
+        padding-bottom: 20px;
+        border-bottom: 2px solid var(--text);
+        margin-bottom: 28px;
+      }
+      .page-header-eyebrow {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 1.2px;
+        text-transform: uppercase;
+        color: var(--text-3);
+        margin-bottom: 6px;
+      }
+      .page-header h1 {
+        font-size: clamp(22px, 5vw, 30px);
+        font-weight: 800;
+        letter-spacing: -0.8px;
+        line-height: 1.1;
+        margin-bottom: 8px;
+      }
+      .page-header-sub {
+        font-size: 13.5px;
+        color: var(--text-2);
+        line-height: 1.6;
+      }
+
+      /* ── Section blocks ───────────────────────────── */
+      .section {
+        margin-bottom: 32px;
+      }
+      .section-header {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+        margin-bottom: 14px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--border);
+      }
+      .section-num {
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--text-3);
+        letter-spacing: 0.5px;
+        flex-shrink: 0;
+      }
+      .section-header h2 {
+        font-size: 15px;
+        font-weight: 700;
+        letter-spacing: -0.2px;
+      }
+
+      /* ── Rule rows ────────────────────────────────── */
+      .rule-row {
+        display: grid;
+        grid-template-columns: 160px 1fr;
+        gap: 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .rule-row:last-child {
+        border-bottom: none;
+      }
+      .rule-label {
+        padding: 11px 14px 11px 0;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--text);
+        display: flex;
+        align-items: flex-start;
+        gap: 6px;
+        padding-right: 16px;
+      }
+      .rule-body {
+        padding: 11px 0;
+        font-size: 13px;
+        color: var(--text-2);
+        line-height: 1.6;
+        border-left: 1px solid var(--border);
+        padding-left: 16px;
+      }
+      .rule-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      @media (max-width: 480px) {
+        .rule-row {
+          grid-template-columns: 1fr;
+        }
+        .rule-body {
+          border-left: none;
+          border-top: 1px solid var(--border);
+          padding-left: 0;
+          padding-top: 6px;
+          padding-bottom: 14px;
+        }
+        .rule-label {
+          padding-bottom: 6px;
+        }
+      }
+
+      /* ── Formula ──────────────────────────────────── */
+      .formula {
+        background: var(--bg-rule);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 12px 16px;
+        margin: 12px 0;
+        font-family: "Courier New", monospace;
+        font-size: 13px;
+        color: var(--text);
+        text-align: center;
+        letter-spacing: 0.3px;
+      }
+
+      /* ── Tag / badge ──────────────────────────────── */
+      .tag {
+        display: inline-block;
+        font-size: 11px;
+        font-weight: 600;
+        border-radius: 3px;
+        padding: 1px 7px;
+        vertical-align: middle;
+        margin: 0 1px;
+        line-height: 1.6;
+      }
+      .tag-red {
+        background: var(--accent-bg);
+        color: var(--accent);
+        border: 1px solid var(--accent-bd);
+      }
+      .tag-gold {
+        background: var(--gold-bg);
+        color: var(--gold);
+        border: 1px solid var(--gold-bd);
+      }
+      .tag-gray {
+        background: var(--bg-rule);
+        color: var(--text-2);
+        border: 1px solid var(--border);
+      }
+
+      /* ── Tai badge ────────────────────────────────── */
+      .tai {
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
+        font-size: 12px;
+        font-weight: 700;
+        border-radius: 3px;
+        padding: 2px 8px;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+      .tai-std {
+        background: var(--gold-bg);
+        color: var(--gold);
+        border: 1px solid var(--gold-bd);
+      }
+      .tai-high {
+        background: var(--accent-bg);
+        color: var(--accent);
+        border: 1px solid var(--accent-bd);
+      }
+
+      /* ── Wind table ───────────────────────────────── */
+      .data-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+        margin: 4px 0;
+      }
+      .data-table th {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        color: var(--text-3);
+        text-align: left;
+        padding: 8px 12px;
+        background: var(--bg-rule);
+        border-bottom: 1px solid var(--border);
+      }
+      .data-table th:first-child {
+        border-radius: var(--radius-sm) 0 0 0;
+      }
+      .data-table th:last-child {
+        border-radius: 0 var(--radius-sm) 0 0;
+      }
+      .data-table td {
+        padding: 9px 12px;
+        border-bottom: 1px solid var(--border);
+        vertical-align: middle;
+      }
+      .data-table tr:last-child td {
+        border-bottom: none;
+      }
+      .data-table tr:hover td {
+        background: var(--bg-subtle);
+      }
+      .table-wrap {
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        overflow: hidden;
+      }
+      .wind-sym {
+        font-size: 15px;
+        font-weight: 700;
+        margin-right: 4px;
+      }
+
+      /* ── Alert box ────────────────────────────────── */
+      .alert {
+        border-radius: var(--radius);
+        padding: 12px 14px;
+        margin: 8px 0;
+        font-size: 13px;
+        line-height: 1.6;
+      }
+      .alert-red {
+        background: var(--accent-bg);
+        border: 1px solid var(--accent-bd);
+        color: #7a1f1a;
+      }
+      .alert-red strong {
+        color: var(--accent);
+      }
+      .alert-gold {
+        background: var(--gold-bg);
+        border: 1px solid var(--gold-bd);
+        color: #5c4010;
+      }
+      .alert strong {
+        font-weight: 600;
+      }
+      .alert-title {
+        font-weight: 700;
+        font-size: 13px;
+        margin-bottom: 4px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      /* ══════════════════════════════════════
+       HANDS PAGE
+    ══════════════════════════════════════ */
+      .tier-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 28px 0 14px;
+      }
+      .tier-label {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: var(--text-3);
+        white-space: nowrap;
+      }
+      .tier-rule {
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+      }
+
+      .hand-card {
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 14px 16px;
+        margin-bottom: 8px;
+        background: var(--bg);
+        transition: border-color 0.12s;
+      }
+      .hand-card:hover {
+        border-color: var(--border-md);
+      }
+      .hand-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 6px;
+      }
+      .hand-name {
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 1.3;
+      }
+      .hand-chinese {
+        font-size: 12px;
+        color: var(--text-3);
+        margin-top: 2px;
+      }
+      .hand-desc {
+        font-size: 13px;
+        color: var(--text-2);
+        line-height: 1.6;
+        margin-bottom: 10px;
+      }
+
+      .hand-example {
+        background: var(--bg-subtle);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 10px 12px;
+      }
+      .hand-example-label {
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
+        color: var(--text-3);
+        margin-bottom: 8px;
+      }
+      .hand-tiles {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+        align-items: center;
+      }
+      .meld-group {
+        display: flex;
+        gap: 2px;
+      }
+      .meld-sep {
+        width: 1px;
+        height: 34px;
+        background: var(--border-md);
+        margin: 0 4px;
+        align-self: center;
+        flex-shrink: 0;
+      }
+
+      /* Tile chips — clean ivory/document feel */
+      .t {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 26px;
+        height: 34px;
+        background: #fff;
+        border: 1px solid #c8c3b8;
+        border-radius: 3px;
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--text);
+        box-shadow:
+          0 1px 2px rgba(0, 0, 0, 0.1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.9);
+        flex-shrink: 0;
+        line-height: 1;
+      }
+      .t.red {
+        color: var(--accent);
+      }
+      .t.grn {
+        color: var(--green);
+      }
+      .t.wind {
+        color: #2b4c8c;
+      }
+      .t.pair {
+        background: #f7f4ee;
+        border-color: #b0ab9e;
+        color: var(--text);
+      }
+      .concealed-group {
+        display: flex;
+        gap: 2px;
+        border: 1.5px dashed var(--border-md);
+        border-radius: 4px;
+        padding: 3px 4px;
+      }
+
+      /* ══════════════════════════════════════
+       CALCULATOR PAGE
+    ══════════════════════════════════════ */
+      .settings-block {
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        overflow: hidden;
+        margin-bottom: 20px;
+      }
+      .settings-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 13px 16px;
+        border-bottom: 1px solid var(--border);
+      }
+      .settings-row:last-child {
+        border-bottom: none;
+      }
+      .settings-row:hover {
+        background: var(--bg-subtle);
+      }
+      .settings-label {
+        font-size: 13px;
+        font-weight: 600;
+      }
+      .settings-sub {
+        font-size: 12px;
+        color: var(--text-3);
+        margin-top: 1px;
+      }
+      .num-input {
+        background: var(--bg);
+        border: 1px solid var(--border-md);
+        border-radius: var(--radius-sm);
+        color: var(--text);
+        font-family: inherit;
+        font-size: 15px;
+        font-weight: 700;
+        width: 76px;
+        text-align: center;
+        padding: 6px 8px;
+        outline: none;
+        transition: border-color 0.15s;
+      }
+      .num-input:focus {
+        border-color: var(--text-3);
+      }
+
+      .calc-section-label {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
+        color: var(--text-3);
+        margin-bottom: 10px;
+      }
+
+      .tai-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 10px;
+      }
+      .tai-row label {
+        font-size: 13px;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+      .tai-row input[type="range"] {
+        flex: 1;
+        accent-color: var(--text);
+        height: 2px;
+      }
+      .tai-row .tai-num {
+        font-size: 22px;
+        font-weight: 800;
+        min-width: 36px;
+        text-align: right;
+        letter-spacing: -0.5px;
+      }
+
+      .tai-text-input {
+        width: 100%;
+        background: var(--bg-subtle);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        color: var(--text);
+        font-family: inherit;
+        font-size: 14px;
+        padding: 8px 12px;
+        outline: none;
+        margin-bottom: 12px;
+        text-align: center;
+        transition: border-color 0.15s;
+      }
+      .tai-text-input:focus {
+        border-color: var(--border-md);
+        background: var(--bg);
+      }
+
+      .win-type-row {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 10px;
+      }
+      .win-type-btn {
+        flex: 1;
+        background: var(--bg-subtle);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        color: var(--text-2);
+        font-family: inherit;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 9px 8px;
+        cursor: pointer;
+        transition: all 0.12s;
+      }
+      .win-type-btn.sel {
+        background: var(--text);
+        border-color: var(--text);
+        color: var(--bg);
+      }
+
+      .dealer-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 13px;
+        color: var(--text-2);
+        margin-bottom: 16px;
+      }
+      .toggle {
+        position: relative;
+        width: 40px;
+        height: 22px;
+      }
+      .toggle input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      .toggle-slider {
+        position: absolute;
+        inset: 0;
+        background: var(--border-md);
+        border-radius: 11px;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .toggle-slider::after {
+        content: "";
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        left: 3px;
+        top: 3px;
+        background: white;
+        border-radius: 50%;
+        transition: transform 0.2s;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+      }
+      .toggle input:checked + .toggle-slider {
+        background: var(--text);
+      }
+      .toggle input:checked + .toggle-slider::after {
+        transform: translateX(18px);
+      }
+
+      .calc-result {
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 20px 16px;
+        text-align: center;
+        margin-bottom: 12px;
+        background: var(--bg-subtle);
+      }
+      .calc-amount {
+        font-size: 44px;
+        font-weight: 800;
+        letter-spacing: -2px;
+        line-height: 1;
+        margin-bottom: 6px;
+      }
+      .calc-sublabel {
+        font-size: 12.5px;
+        color: var(--text-3);
+      }
+
+      .calc-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+      .calc-cell {
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 10px 12px;
+        background: var(--bg);
+      }
+      .calc-cell-val {
+        font-size: 18px;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+      }
+      .calc-cell-lbl {
+        font-size: 11px;
+        color: var(--text-3);
+        margin-top: 2px;
+      }
+
+      hr.divider {
+        border: none;
+        border-top: 1px solid var(--border);
+        margin: 24px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAV -->
+    <nav>
+      <div class="nav-inner">
+        <div class="nav-logo" onclick="showPage('core')">
+          <div class="nav-logo-mark">台</div>
+          Taiwan Mahjong
+        </div>
+        <button class="nav-btn active" id="nav-core" onclick="showPage('core')">
+          Rules
+        </button>
+        <button class="nav-btn" id="nav-hands" onclick="showPage('hands')">
+          Hands
+        </button>
+        <button class="nav-btn" id="nav-calc" onclick="showPage('calc')">
+          Payout
+        </button>
+      </div>
+    </nav>
+
+    <!-- SEARCH -->
+    <div class="search-wrap">
+      <div class="search-box">
+        <span class="search-icon">⌕</span>
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Search rules, hands, penalties…"
+          oninput="handleSearch(this.value)"
+        />
+        <button class="search-clear" id="search-clear" onclick="clearSearch()">
+          ×
+        </button>
+      </div>
+    </div>
+    <div id="search-results"></div>
+
+    <!-- ════════════════════════════════════════
+     PAGE: CORE RULES
+════════════════════════════════════════ -->
+    <div class="page active" id="page-core">
+      <div class="content">
+        <div class="page-header">
+          <div class="page-header-eyebrow">16-Tile Rules · Quick Reference</div>
+          <h1>Core Rules &amp; Scoring</h1>
+          <div class="page-header-sub">
+            Payouts, winds, seat bonuses, and infractions. Hand patterns are on
+            the
+            <span
+              style="
+                text-decoration: underline;
+                cursor: pointer;
+                font-weight: 600;
+              "
+              onclick="showPage('hands')"
+              >Hands</span
+            >
+            page.
+          </div>
+        </div>
+
+        <!-- Section 1: Mechanics -->
+        <div class="section">
+          <div class="section-header">
+            <span class="section-num">§1</span>
+            <h2>Core Mechanics &amp; Payout</h2>
+          </div>
+
+          <div
+            class="rule-row"
+            data-search="hand structure 16 tiles melds pair winning"
+          >
+            <div class="rule-label">Hand Structure</div>
+            <div class="rule-body">
+              A winning hand is <strong>17 tiles</strong> — 5 melds of 3 tiles
+              each, plus 1 pair. You hold 16 and win on the 17th drawn or
+              discarded tile.
+            </div>
+          </div>
+
+          <div
+            class="rule-row"
+            data-search="payout formula linear base tai value"
+          >
+            <div class="rule-label">Payout Formula</div>
+            <div class="rule-body">
+              Scoring is strictly linear — no exponential scaling.
+              <div class="formula">Total = Base + (Total Tai × Tai Value)</div>
+            </div>
+          </div>
+
+          <div
+            class="rule-row"
+            data-search="discard win fang chong single player pays full"
+          >
+            <div class="rule-label">
+              Win by Discard <span class="tag tag-gray">放銃</span>
+            </div>
+            <div class="rule-body">
+              The player who discards the winning tile pays the
+              <strong>full total alone</strong>. The other two players owe
+              nothing.
+            </div>
+          </div>
+
+          <div
+            class="rule-row"
+            data-search="self draw zi mo all three opponents pay triple earnings"
+          >
+            <div class="rule-label">
+              Win by Self-Draw <span class="tag tag-gray">自摸</span>
+            </div>
+            <div class="rule-body">
+              You draw the winning tile yourself.
+              <strong>All three opponents each pay the full total</strong>,
+              tripling your earnings versus a discard win.
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 2: Dealer -->
+        <div class="section">
+          <div class="section-header">
+            <span class="section-num">§2</span>
+            <h2>Dealer Rules</h2>
+          </div>
+
+          <div
+            class="rule-row"
+            data-search="dealer zhuang jia advantage +1 tai bonus"
+          >
+            <div class="rule-label">
+              Dealer Advantage <span class="tag tag-gold">莊家</span>
+            </div>
+            <div class="rule-body">
+              The active dealer always adds
+              <span class="tag tag-gold">+1 Tai</span> to every hand. If a
+              non-dealer wins, the dealer pays that extra Tai on top of the
+              normal amount.
+            </div>
+          </div>
+
+          <div
+            class="rule-row"
+            data-search="dealer streak la zhuang consecutive bonus 2n+1 formula"
+          >
+            <div class="rule-label">
+              Dealer Streaks <span class="tag tag-gray">拉莊</span>
+            </div>
+            <div class="rule-body">
+              Every consecutive hand the dealer wins or draws, a streak bonus of
+              <strong>2n + 1 Tai</strong> applies (where n = streak number).
+              <br />
+              <span
+                class="tag tag-gold"
+                style="margin-top: 8px; display: inline-block"
+                >Streak 1 → +3 Tai</span
+              >
+              <span class="tag tag-gold">Streak 2 → +5 Tai</span>
+              <span class="tag tag-gold">Streak 3 → +7 Tai</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 3: Seats, Winds, Flowers -->
+        <div class="section">
+          <div class="section-header">
+            <span class="section-num">§3</span>
+            <h2>Seat, Wind &amp; Flower Association</h2>
+          </div>
+
+          <div
+            class="table-wrap"
+            style="margin-bottom: 14px"
+            data-search="seat wind flower season east south west north proper tile"
+          >
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Seat</th>
+                  <th>Wind</th>
+                  <th>Proper Flower</th>
+                  <th>Proper Season</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>1</strong></td>
+                  <td>
+                    <span class="wind-sym" style="color: #2b4c8c">東</span> East
+                  </td>
+                  <td>梅 Plum [#1]</td>
+                  <td>春 Spring [#1]</td>
+                </tr>
+                <tr>
+                  <td><strong>2</strong></td>
+                  <td>
+                    <span class="wind-sym" style="color: #2b4c8c">南</span>
+                    South
+                  </td>
+                  <td>蘭 Orchid [#2]</td>
+                  <td>夏 Summer [#2]</td>
+                </tr>
+                <tr>
+                  <td><strong>3</strong></td>
+                  <td>
+                    <span class="wind-sym" style="color: #2b4c8c">西</span> West
+                  </td>
+                  <td>菊 Chrysanthemum [#3]</td>
+                  <td>秋 Autumn [#3]</td>
+                </tr>
+                <tr>
+                  <td><strong>4</strong></td>
+                  <td>
+                    <span class="wind-sym" style="color: #2b4c8c">北</span>
+                    North
+                  </td>
+                  <td>竹 Bamboo [#4]</td>
+                  <td>冬 Winter [#4]</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div
+            class="rule-row"
+            data-search="wind pung triplet seat round double tai scoring"
+          >
+            <div class="rule-label">Wind Triplet Scoring</div>
+            <div class="rule-body">
+              A triplet of your <strong>Seat Wind</strong> scores
+              <span class="tag tag-gold">+1 Tai</span>. A triplet of the current
+              <strong>Round Wind</strong> also scores
+              <span class="tag tag-gold">+1 Tai</span>. If your Seat Wind equals
+              the Round Wind, they stack as a <strong>Double Wind</strong>
+              <span class="tag tag-gold">+2 Tai</span>.
+            </div>
+          </div>
+
+          <div
+            class="rule-row"
+            data-search="flower season proper scoring draw 1 tai 2 tai house rule"
+          >
+            <div class="rule-label">Flower &amp; Season Scoring</div>
+            <div class="rule-body">
+              Any flower tile drawn scores
+              <span class="tag tag-gold">+1 Tai</span>. Drawing your exact
+              proper flower or season (matching seat number) also scores
+              <span class="tag tag-gold">+1 Tai</span> — some tables award
+              <strong>+2 Tai</strong> for an exact match (house rule).
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 4: Violations -->
+        <div class="section">
+          <div class="section-header">
+            <span class="section-num">§4</span>
+            <h2>Violations &amp; Penalties</h2>
+          </div>
+
+          <div data-search="minimum tai 0 tai limit table require win">
+            <div class="rule-row">
+              <div class="rule-label">Minimum Tai Rule</div>
+              <div class="rule-body">
+                Most tables require a minimum Tai count to win (commonly 1 or 3
+                Tai). Winning below the minimum counts as a Fake Win, even if
+                the hand structure is correct. Set your table's minimum in the
+                <span
+                  style="
+                    text-decoration: underline;
+                    cursor: pointer;
+                    font-weight: 600;
+                  "
+                  onclick="showPage('calc')"
+                  >Payout Calculator</span
+                >.
+              </div>
+            </div>
+          </div>
+
+          <div
+            data-search="fake win zha hu penalty pay all three players dealer forfeit round end"
+          >
+            <div class="rule-row">
+              <div class="rule-label">
+                Fake Win <span class="tag tag-red">詐胡</span>
+              </div>
+              <div class="rule-body">
+                Declaring "Hu!" with an illegal hand or below the minimum Tai.
+                <div class="alert alert-red" style="margin-top: 8px">
+                  <div class="alert-title">Penalty</div>
+                  Round ends immediately. You pay all three opponents — each
+                  receives Base + a pre-agreed penalty Tai (typically 5, 10, or
+                  the table ceiling). Dealer forfeit the deal.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            data-search="short hand long hand dead xiang gong tile count 16 disqualified"
+          >
+            <div class="rule-row">
+              <div class="rule-label">
+                Short / Long Hand <span class="tag tag-red">相公</span>
+              </div>
+              <div class="rule-body">
+                Holding fewer or more than 16 tiles before winning.
+                <div class="alert alert-red" style="margin-top: 8px">
+                  <div class="alert-title">Penalty</div>
+                  Hand declared dead. You cannot win or call tiles this round,
+                  but must keep discarding. You still owe payment if someone
+                  else wins.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            data-search="self draw etiquette tile touch floor invalid zi mo verify"
+          >
+            <div class="rule-row" style="border-bottom: none">
+              <div class="rule-label">Self-Draw Etiquette</div>
+              <div class="rule-body">
+                Keep the winning tile visibly separate from your hand until
+                verified. If it touches your tiles, falls on exposed melds, or
+                hits the floor before verification, the self-draw is invalidated
+                — and in strict circles, treated as a Fake Win.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════
+     PAGE: HAND RANKINGS
+════════════════════════════════════════ -->
+    <div class="page" id="page-hands">
+      <div class="content">
+        <div class="page-header">
+          <div class="page-header-eyebrow">Hand Rankings</div>
+          <h1>Winning Patterns</h1>
+          <div class="page-header-sub">
+            All hands require 5 melds + 1 pair. Tai values stack with self-draw,
+            dealer bonus, and flower tiles. Dashed borders mark concealed melds.
+          </div>
+        </div>
+
+        <!-- BASIC -->
+        <div class="tier-header">
+          <span class="tier-label">Basic · 1–2 Tai</span>
+          <div class="tier-rule"></div>
+        </div>
+
+        <div
+          class="hand-card"
+          data-search="self draw zi mo 1 tai wall draw winning tile"
+        >
+          <div class="hand-top">
+            <div>
+              <div class="hand-name">Self-Draw</div>
+              <div class="hand-chinese">自摸 · Zì Mō</div>
+            </div>
+            <div class="tai tai-std">1 Tai</div>
+          </div>
+          <div class="hand-desc">
+            Draw the winning tile from the wall yourself rather than claiming an
+            opponent's discard.
+          </div>
+        </div>
+
+        <div
+          class="hand-card"
+          data-search="concealed hand men qing closed no exposed melds chow pung 1 tai"
+        >
+          <div class="hand-top">
+            <div>
+              <div class="hand-name">Concealed Hand</div>
+              <div class="hand-chinese">門清 · Mén Qīng</div>
+            </div>
+            <div class="tai tai-std">1 Tai</div>
+          </div>
+          <div class="hand-desc">
+            Your entire hand is closed — no chows or pungs exposed from
+            opponents' discards.
+          </div>
+        </div>
+
+        <div
+          class="hand-card"
+          data-search="single wait ting dan zhang 1 tai middle gap edge pair eyes"
+        >
+          <div class="hand-top">
+            <div>
+              <div class="hand-name">Single Wait</div>
+              <div class="hand-chinese">聽單張 · Tīng Dān Zhāng</div>
+            </div>
+            <div class="tai tai-std">1 Tai</div>
+          </div>
+          <div class="hand-desc">
+            Winning on a single-tile wait: a middle gap (4–6, waiting on 5), an
+            edge wait (1–2, waiting on 3), or completing the final pair.
+          </div>
+        </div>
+
+        <div
+          class="hand-card"
+          data-search="dragon pung triplet red green white zhong fa bai 1 tai each"
+        >
+          <div class="hand-top">
+            <div>
+              <div class="hand-name">Dragon Triplet</div>
+              <div class="hand-chinese">三元牌 · Sān Yuán Pái</div>
+            </div>
+            <div class="tai tai-std">1 Tai each</div>
+          </div>
+          <div class="hand-desc">
+            A completed triplet (or quad) of any Dragon tile. Scores 1 Tai per
+            Dragon triplet held.
+          </div>
+          <div class="hand-example">
+            <div class="hand-example-label">Example triplets</div>
+            <div class="hand-tiles">
+              <div class="meld-group">
+                <div class="t red">中</div>
+                <div class="t red">中</div>
+                <div class="t red">中</div>
+              </div>
+              <div class="meld-sep"></div>
+              <div class="meld-group">
+                <div class="t grn">發</div>
+                <div class="t grn">發</div>
+                <div class="t grn">發</div>
+              </div>
+              <div class="meld-sep"></div>
+              <div class="meld-group">
+                <div class="t">白</div>
+                <div class="t">白</div>
+                <div class="t">白</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="hand-card"
+          data-search="all chows ping he sequences no honor two sided wait 2 tai"
+        >
+          <div class="hand-top">
+            <div>
+              <div class="hand-name">All Chows</div>
+              <div class="hand-chinese">平和 · Píng Hé</div>
+            </div>
+            <div class="tai tai-std">2 Tai</div>
+          </div>
+          <div class="hand-desc">
+            All five melds are sequences. No triplets, no honor tiles. Must win
+            on a two-sided open wait.
+          </div>
+          <div class="hand-example">
+            <div class="hand-example-label">Example hand</div>
+            <div class="hand-tiles">
+              <div class="meld-group">
+                <div class="t">1</div>
+                <div class="t">2</div>
+                <div class="t">3</div>
+              </div>
+              <div class="meld-sep"></div>
+              <div class="meld-group">
+                <div class="t">4</div>
+                <div class="t">5</div>
+                <div class="t">6</div>
+              </div>
+              <div class="meld-sep"></div>
+              <div class="meld-group">
+                <div class="t">3</div>
+                <div class="t">4</div>
+                <div class="t">5</div>
+              </div>
+              <div class="meld-sep"></div>
+              <div class="meld-group">
+                <div class="t">6</div>
+                <div class="t">7</div>
+                <div class="t">8</div>
+              </div>
+              <div class="meld-sep"></div>
+              <div class="meld-group">
+                <div class="t">4</div>
+                <div class="t">5</div>
+                <div class="t">6</div>
+              </div>
+              <div class="meld-sep"></div>
+              <div class="meld-group">
+                <div class="t pair">8</div>
+                <div class="t pair">8</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="hand-card"
+          data-search="three concealed pungs san an ke closed triplets self drawn 2 tai"
+        >
+          <div class="hand-top">
+            <div>
+              <div class="hand-name">Three Concealed Triplets</div>
+              <div class="hand-chinese">三暗刻 · Sān Àn Kè</div>
+            </div>
+            <div class="tai tai-std">2 Tai</div>
+          </div>
+          <div class="hand-desc">
+            Three triplets formed entirely within your closed hand via
+            self-drawn tiles — none called from discards.
+          </div>
+          <div class="hand-example">
+            <div class="hand-example-label">Example (dashed = concealed)</div>
+            <div class="hand-tiles">
+              <div class="concealed-group">
+                <div class="t">2</div>
+                <div class="t">2</div>
+                <div class="t">2</div>
+              </div>
+              <div class="concealed-group">
+                <div class="t">5</div>
+                <div class="t">5</div>
+                <div class="t">5</div>
+              </div>
+              <div class="concealed-group">
+                <div class="t">7</div>
+                <div class="t">7</div>
+                <div class="t">7</div>
+              </div>
+              <div class="meld-sep"></div>
+              <span style="font-size: 11px; color: var(--text-3)"
+                >+ 2 sequences + pair</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- INTERMEDIATE -->
+        <div class="tier-header">
+          <span class="tier-label">Intermediate · 4–5 Tai</span>
+          <div class="tier-rule"></div>
+        </div>
+
+        <div
+          class="hand-card"
+          data-search="all pungs peng peng hu all triplets quads pair 4 tai"
+        >
+          <div class="hand-top">
+            <div>
+              <div class="hand-name">All Triplets</div>
+              <div class="hand-chinese">碰碰胡 · Pèng Pèng Hú</div>
+            </div>
+            <div class="tai tai-std">4 Tai</div>
+          </div>
+          <div class="hand-desc">
+            Every meld is a triplet or quad — no sequences at all. Ends with one
+            pair of eyes.
+          </div>
+          <div class="hand-example">
+            <div class="hand-example-label">Example hand</div>
+            <div class="hand-tiles">
+              <div class="meld-group">
+                <div class="t">1</div>
+                <div class="t">1</div>
+                <div class="t">1</div>
+              </div>
+              <div class="meld-sep"></div>
+              <div class="meld-group">
+                <div class="t">4</div>
+                <div class="t">4</div>
+                <div class="t">4</div>
+              </div>
+              <div class="meld-sep"></div>
+              <div class="meld-group">
+                <div class="t">9</div>
+                <div class="t">9</div>
+                <div class="t">9</div>
+              </div>
+              <div class="meld-sep"></div>
+              <div class="meld-group">
+                <div class="t">3</div>
+                <div class="t">3</div>
+                <div class="t">3</div>
+              </div>
+              <div class="meld-sep"></div>
+              <div class="meld-group">
+                <div class="t wind">南</div>
+                <div class="t wind">南</div>
+                <div class="t wind">南</div>
+              </div>
+              <div class="meld-sep"></div>
+              <div class="meld-group">
+                <div class="t pair">6</div>
+                <div class="t pair">6</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="hand-card"
+          data-search="half flush hun yi se single suit honor tiles mixed 4 tai"
+        >
+          <div class="hand-top">
+            <div>
+              <div class="hand-name">Half Flush</div>
+              <div class="hand-chinese">混一色 · Hùn Yī Sè</div>
+            </div>
+            <div class="tai tai-std">4 Tai</div>
+          </div>
+          <div class="hand-desc">
+            All tiles from one number suit (Dots, Bamboo, or Characters)
+            <em>plus</em> honor tiles (winds/dragons). No mixing of number
+            suits.
+          </div>
+          <div class="hand-example">
+            <div class="hand-example-label">Example (Dots + honors)</div>
+            <div class="hand-tiles">
+              <div class="meld-group">
+                <div class="t">1</div>
+                <div class="t">2</div>
+                <div class="t">3</div>
+              </div>
+              <div class="meld-sep"></div>
+              <div class="meld-group">
+                <div class="t">4</div>
+                <div class="t">5</div>
+                <div class="t">6</div>
+              </div>
+              <div class="meld-sep"></div>
+              <div class="meld-group">
+                <div class="t">5</div>
+                <div class="t">5</div>
+                <div class="t">5</div>
+              </div>
+              <div class="meld-sep"></div>
+              <div class="meld-group">
+                <div class="t red">中</div>
+                <div class="t red">中</div>
+                <div class="t red">中</div>
+              </div>
+              <div class="meld-sep"></div>
+              <div class="meld-group">
+                <div class="t wind">東</div>
+                <div class="t wind">東</div>
+                <div class="t wind">東</div>
+              </div>
+              <div class="meld-sep"></div>
+              <div class="meld-group">
+                <div class="t pair">9</div>
+                <div class="t pair">9</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="hand-card"
+          data-search="four concealed pungs si an ke four closed triplets no discards 5 tai"
+        >
+          <div class="hand-top">
+            <div>
+              <div class="hand-name">Four Concealed Triplets</div>
+              <div class="hand-chinese">四暗刻 · Sì Àn Kè</div>
+            </div>
+            <div class="tai tai-std">5 Tai</div>
+          </div>
+          <div class="hand-desc">
+            Four separate triplets built entirely within your closed hand — none
+            called from discards.
+          </div>
+          <div class="hand-example">
+            <div class="hand-example-label">Example (all concealed)</div>
+            <div class="hand-tiles">
+              <div class="concealed-group">
+                <div class="t">1</div>
+                <div class="t">1</div>
+                <div class="t">1</div>
+              </div>
+              <div class="concealed-group">
+                <div class="t">3</div>
+                <div class="t">3</div>
+                <div class="t">3</div>
+              </div>
+              <div class="concealed-group">
+                <div class="t">8</div>
+                <div class="t">8</div>
+                <div class="t">8</div>
+              </div>
+              <div class="concealed-group">
+                <div class="t">9</div>
+                <div class="t">9</div>
+                <div class="t">9</div>
+              </div>
+              <div class="meld-sep"></div>
+              <span style="font-size: 11px; color: var(--text-3)"
+                >+ 1 seq + pair</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- ADVANCED -->
+        <div class="tier-header">
+          <span class="tier-label">Advanced · 8 Tai</span>
+          <div class="tier-rule"></div>
+        </div>
+
+        <div
+          class="hand-card"
+          data-search="pure flush qing yi se single suit only no honor 8 tai"
+        >
+          <div class="hand-top">
+            <div>
+              <div class="hand-name">Pure Flush</div>
+              <div class="hand-chinese">清一色 · Qīng Yī Sè</div>
+            </div>
+            <div class="tai tai-std">8 Tai</div>
+          </div>
+          <div class="hand-desc">
+            Every tile belongs to exactly one number suit — no honor tiles
+            whatsoever.
+          </div>
+          <div class="hand-example">
+            <div class="hand-example-label">Example (all Bamboo)</div>
+            <div class="hand-tiles">
+              <div class="meld-group">
+                <div class="t">1</div>
+                <div class="t">2</div>
+                <div class="t">3</div>
+              </div>
+              <div class="meld-sep"></div>
+              <div class="meld-group">
+                <div class="t">2</div>
+                <div class="t">3</div>
+                <div class="t">4</div>
+              </div>
+              <div class="meld-sep"></div>
+              <div class="meld-group">
+                <div class="t">5</div>
+                <div class="t">6</div>
+                <div class="t">7</div>
+              </div>
+              <div class="meld-sep"></div>
+              <div class="meld-group">
+                <div class="t">7</div>
+                <div class="t">8</div>
+                <div class="t">9</div>
+              </div>
+              <div class="meld-sep"></div>
+              <div class="meld-group">
+                <div class="t">8</div>
+                <div class="t">8</div>
+                <div class="t">8</div>
+              </div>
+              <div class="meld-sep"></div>
+              <div class="meld-group">
+                <div class="t pair">4</div>
+                <div class="t pair">4</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="hand-card"
+          data-search="all honors zi yi se wind dragon tiles only no number suits 8 tai"
+        >
+          <div class="hand-top">
+            <div>
+              <div class="hand-name">All Honors</div>
+              <div class="hand-chinese">字一色 · Zì Yī Sè</div>
+            </div>
+            <div class="tai tai-std">8 Tai</div>
+          </div>
+          <div class="hand-desc">
+            The entire hand is composed of Wind and Dragon tiles only — no
+            numbered suit tiles permitted.
+          </div>
+          <div class="hand-example">
+            <div class="hand-example-label">Example hand</div>
+            <div class="hand-tiles">
+              <div class="meld-group">
+                <div class="t wind">東</div>
+                <div class="t wind">東</div>
+                <div class="t wind">東</div>
+              </div>
+              <div class="meld-sep"></div>
+              <div class="meld-group">
+                <div class="t wind">南</div>
+                <div class="t wind">南</div>
+                <div class="t wind">南</div>
+              </div>
+              <div class="meld-sep"></div>
+              <div class="meld-group">
+                <div class="t wind">西</div>
+                <div class="t wind">西</div>
+                <div class="t wind">西</div>
+              </div>
+              <div class="meld-sep"></div>
+              <div class="meld-group">
+                <div class="t red">中</div>
+                <div class="t red">中</div>
+                <div class="t red">中</div>
+              </div>
+              <div class="meld-sep"></div>
+              <div class="meld-group">
+                <div class="t grn">發</div>
+                <div class="t grn">發</div>
+                <div class="t grn">發</div>
+              </div>
+              <div class="meld-sep"></div>
+              <div class="meld-group">
+                <div class="t pair">白</div>
+                <div class="t pair">白</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- LEGENDARY -->
+        <div class="tier-header">
+          <span class="tier-label">Legendary · 15–40 Tai</span>
+          <div class="tier-rule"></div>
+        </div>
+
+        <div
+          class="hand-card"
+          data-search="little three dragons xiao san yuan two dragon triplets pair third 15 tai"
+        >
+          <div class="hand-top">
+            <div>
+              <div class="hand-name">Little Three Dragons</div>
+              <div class="hand-chinese">小三元 · Xiǎo Sān Yuán</div>
+            </div>
+            <div class="tai tai-high">15 Tai</div>
+          </div>
+          <div class="hand-desc">
+            Two complete Dragon triplets plus a pair of the remaining third
+            Dragon type.
+          </div>
+          <div class="hand-example">
+            <div class="hand-example-label">Example</div>
+            <div class="hand-tiles">
+              <div class="meld-group">
+                <div class="t red">中</div>
+                <div class="t red">中</div>
+                <div class="t red">中</div>
+              </div>
+              <div class="meld-sep"></div>
+              <div class="meld-group">
+                <div class="t grn">發</div>
+                <div class="t grn">發</div>
+                <div class="t grn">發</div>
+              </div>
+              <div class="meld-sep"></div>
+              <div class="meld-group">
+                <div class="t pair">白</div>
+                <div class="t pair">白</div>
+              </div>
+              <div class="meld-sep"></div>
+              <span style="font-size: 11px; color: var(--text-3)"
+                >+ any 3 melds</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="hand-card"
+          data-search="big three dragons da san yuan three dragon triplets all 30 tai"
+        >
+          <div class="hand-top">
+            <div>
+              <div class="hand-name">Big Three Dragons</div>
+              <div class="hand-chinese">大三元 · Dà Sān Yuán</div>
+            </div>
+            <div class="tai tai-high">30 Tai</div>
+          </div>
+          <div class="hand-desc">
+            Triplets of all three Dragon types — Red 中, Green 發, and White 白.
+          </div>
+          <div class="hand-example">
+            <div class="hand-example-label">Example</div>
+            <div class="hand-tiles">
+              <div class="meld-group">
+                <div class="t red">中</div>
+                <div class="t red">中</div>
+                <div class="t red">中</div>
+              </div>
+              <div class="meld-sep"></div>
+              <div class="meld-group">
+                <div class="t grn">發</div>
+                <div class="t grn">發</div>
+                <div class="t grn">發</div>
+              </div>
+              <div class="meld-sep"></div>
+              <div class="meld-group">
+                <div class="t">白</div>
+                <div class="t">白</div>
+                <div class="t">白</div>
+              </div>
+              <div class="meld-sep"></div>
+              <span style="font-size: 11px; color: var(--text-3)"
+                >+ 2 melds + pair</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="hand-card"
+          data-search="little four winds xiao si xi three wind triplets fourth wind pair 30 tai"
+        >
+          <div class="hand-top">
+            <div>
+              <div class="hand-name">Little Four Winds</div>
+              <div class="hand-chinese">小四喜 · Xiǎo Sì Xǐ</div>
+            </div>
+            <div class="tai tai-high">30 Tai</div>
+          </div>
+          <div class="hand-desc">
+            Triplets of three Wind directions and a pair of the remaining fourth
+            Wind.
+          </div>
+          <div class="hand-example">
+            <div class="hand-example-label">Example</div>
+            <div class="hand-tiles">
+              <div class="meld-group">
+                <div class="t wind">東</div>
+                <div class="t wind">東</div>
+                <div class="t wind">東</div>
+              </div>
+              <div class="meld-sep"></div>
+              <div class="meld-group">
+                <div class="t wind">南</div>
+                <div class="t wind">南</div>
+                <div class="t wind">南</div>
+              </div>
+              <div class="meld-sep"></div>
+              <div class="meld-group">
+                <div class="t wind">西</div>
+                <div class="t wind">西</div>
+                <div class="t wind">西</div>
+              </div>
+              <div class="meld-sep"></div>
+              <div class="meld-group">
+                <div class="t pair wind">北</div>
+                <div class="t pair wind">北</div>
+              </div>
+              <div class="meld-sep"></div>
+              <span style="font-size: 11px; color: var(--text-3)"
+                >+ 1 meld</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="hand-card"
+          data-search="big four winds da si xi all four wind triplets east south west north 40 tai"
+        >
+          <div class="hand-top">
+            <div>
+              <div class="hand-name">Big Four Winds</div>
+              <div class="hand-chinese">大四喜 · Dà Sì Xǐ</div>
+            </div>
+            <div class="tai tai-high">40 Tai</div>
+          </div>
+          <div class="hand-desc">
+            Triplets of all four Wind directions — East, South, West, and North.
+          </div>
+          <div class="hand-example">
+            <div class="hand-example-label">Example</div>
+            <div class="hand-tiles">
+              <div class="meld-group">
+                <div class="t wind">東</div>
+                <div class="t wind">東</div>
+                <div class="t wind">東</div>
+              </div>
+              <div class="meld-sep"></div>
+              <div class="meld-group">
+                <div class="t wind">南</div>
+                <div class="t wind">南</div>
+                <div class="t wind">南</div>
+              </div>
+              <div class="meld-sep"></div>
+              <div class="meld-group">
+                <div class="t wind">西</div>
+                <div class="t wind">西</div>
+                <div class="t wind">西</div>
+              </div>
+              <div class="meld-sep"></div>
+              <div class="meld-group">
+                <div class="t wind">北</div>
+                <div class="t wind">北</div>
+                <div class="t wind">北</div>
+              </div>
+              <div class="meld-sep"></div>
+              <span style="font-size: 11px; color: var(--text-3)"
+                >+ 1 meld + pair</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="hand-card"
+          data-search="five concealed pungs wu an ke all five triplets closed self draw pair wait 40 tai"
+        >
+          <div class="hand-top">
+            <div>
+              <div class="hand-name">Five Concealed Triplets</div>
+              <div class="hand-chinese">五暗刻 · Wǔ Àn Kè</div>
+            </div>
+            <div class="tai tai-high">40 Tai</div>
+          </div>
+          <div class="hand-desc">
+            All five melds are triplets built entirely within your closed hand.
+            Must win via self-draw or on a pair-wait.
+          </div>
+          <div class="hand-example">
+            <div class="hand-example-label">Example (all concealed)</div>
+            <div class="hand-tiles">
+              <div class="concealed-group">
+                <div class="t">2</div>
+                <div class="t">2</div>
+                <div class="t">2</div>
+              </div>
+              <div class="concealed-group">
+                <div class="t">4</div>
+                <div class="t">4</div>
+                <div class="t">4</div>
+              </div>
+              <div class="concealed-group">
+                <div class="t">9</div>
+                <div class="t">9</div>
+                <div class="t">9</div>
+              </div>
+              <div class="concealed-group">
+                <div class="t">1</div>
+                <div class="t">1</div>
+                <div class="t">1</div>
+              </div>
+              <div class="concealed-group">
+                <div class="t">7</div>
+                <div class="t">7</div>
+                <div class="t">7</div>
+              </div>
+              <div class="meld-sep"></div>
+              <div class="meld-group">
+                <div class="t pair">5</div>
+                <div class="t pair">5</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════
+     PAGE: PAYOUT CALCULATOR
+════════════════════════════════════════ -->
+    <div class="page" id="page-calc">
+      <div class="content">
+        <div class="page-header">
+          <div class="page-header-eyebrow">Payout Calculator</div>
+          <h1>Count the Money</h1>
+          <div class="page-header-sub">
+            Set your table values once. Adjust Tai and win type to see exact
+            amounts owed.
+          </div>
+        </div>
+
+        <div class="calc-section-label">Table Settings</div>
+        <div class="settings-block">
+          <div class="settings-row">
+            <div>
+              <div class="settings-label">Base Value</div>
+              <div class="settings-sub">
+                Paid on every win regardless of Tai
+              </div>
+            </div>
+            <input
+              class="num-input"
+              type="number"
+              id="base-val"
+              value="10"
+              min="0"
+              oninput="calcPayout()"
+            />
+          </div>
+          <div class="settings-row">
+            <div>
+              <div class="settings-label">Value per Tai</div>
+              <div class="settings-sub">Multiplied by total Tai count</div>
+            </div>
+            <input
+              class="num-input"
+              type="number"
+              id="tai-val"
+              value="10"
+              min="0"
+              oninput="calcPayout()"
+            />
+          </div>
+          <div class="settings-row">
+            <div>
+              <div class="settings-label">Minimum Tai to Win</div>
+              <div class="settings-sub">Below this = Fake Win penalty</div>
+            </div>
+            <input
+              class="num-input"
+              type="number"
+              id="min-tai"
+              value="1"
+              min="0"
+              oninput="calcPayout()"
+            />
+          </div>
+        </div>
+
+        <hr class="divider" />
+
+        <div class="calc-section-label">Calculate a Win</div>
+
+        <div class="tai-row">
+          <label>Total Tai</label>
+          <input
+            type="range"
+            id="tai-slider"
+            min="0"
+            max="50"
+            value="3"
+            oninput="syncTaiInput(this.value)"
+          />
+          <div class="tai-num" id="tai-display">3</div>
+        </div>
+        <input
+          type="number"
+          id="tai-input"
+          class="tai-text-input"
+          value="3"
+          min="0"
+          placeholder="Or type Tai count"
+          oninput="syncTaiSlider(this.value)"
+        />
+
+        <div class="win-type-row">
+          <button
+            class="win-type-btn sel"
+            id="btn-discard"
+            onclick="setWinType('discard')"
+          >
+            Discard Win &nbsp;放銃
+          </button>
+          <button
+            class="win-type-btn"
+            id="btn-self"
+            onclick="setWinType('self')"
+          >
+            Self-Draw &nbsp;自摸
+          </button>
+        </div>
+
+        <div class="dealer-row">
+          <span
+            >Dealer involved?
+            <span style="color: var(--text-3); font-size: 12px"
+              >(adds +1 Tai)</span
+            ></span
+          >
+          <label class="toggle">
+            <input type="checkbox" id="dealer-toggle" onchange="calcPayout()" />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div class="calc-result" id="calc-result">
+          <div class="calc-amount" id="calc-amount">—</div>
+          <div class="calc-sublabel" id="calc-sublabel">per payer</div>
+        </div>
+
+        <div class="calc-grid">
+          <div class="calc-cell">
+            <div class="calc-cell-val" id="bd-base">—</div>
+            <div class="calc-cell-lbl">Base</div>
+          </div>
+          <div class="calc-cell">
+            <div class="calc-cell-val" id="bd-tai">—</div>
+            <div class="calc-cell-lbl">Tai Value</div>
+          </div>
+          <div class="calc-cell">
+            <div class="calc-cell-val" id="bd-payers">—</div>
+            <div class="calc-cell-lbl">Payers</div>
+          </div>
+          <div class="calc-cell">
+            <div class="calc-cell-val" id="bd-total">—</div>
+            <div class="calc-cell-lbl">Winner Gets</div>
+          </div>
+        </div>
+
+        <div id="calc-warning" style="display: none; margin-top: 12px">
+          <div class="alert alert-red">
+            <div class="alert-title">⚠ Below Minimum Tai — Fake Win</div>
+            This hand doesn't meet the table minimum. Declaring a win triggers
+            the Fake Win penalty.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      /* ── Page routing ──────────────────────────── */
+      function showPage(id) {
+        document
+          .querySelectorAll(".page")
+          .forEach((p) => p.classList.remove("active"));
+        document
+          .querySelectorAll(".nav-btn")
+          .forEach((b) => b.classList.remove("active"));
+        document.getElementById("page-" + id).classList.add("active");
+        document.getElementById("nav-" + id).classList.add("active");
+        clearSearch();
+        window.scrollTo({ top: 0, behavior: "instant" });
+      }
+
+      /* ── Search ────────────────────────────────── */
+      const searchIndex = [];
+
+      function buildIndex() {
+        document.querySelectorAll("[data-search]").forEach((el) => {
+          const titleEl = el.querySelector(
+            ".rule-label, .hand-name, .section-header h2, .alert-title",
+          );
+          const bodyEl = el.querySelector(".rule-body, .hand-desc, .alert");
+          const chineseEl = el.querySelector(".hand-chinese");
+          const taiEl = el.querySelector(".tai");
+          const page = el.closest(".page")?.id?.replace("page-", "") || "core";
+          searchIndex.push({
+            el,
+            page,
+            title: titleEl?.textContent?.trim() || "",
+            body: bodyEl?.textContent?.trim() || "",
+            chinese: chineseEl?.textContent?.trim() || "",
+            tai: taiEl?.textContent?.trim() || "",
+            keywords: el.dataset.search || "",
+          });
+        });
+      }
+
+      function handleSearch(q) {
+        q = q.trim().toLowerCase();
+        document.getElementById("search-clear").style.display = q
+          ? "block"
+          : "none";
+        const res = document.getElementById("search-results");
+        if (!q) {
+          res.classList.remove("visible");
+          res.innerHTML = "";
+          return;
+        }
+        const terms = q.split(/\s+/);
+        const hits = searchIndex.filter((item) => {
+          const hay = [
+            item.title,
+            item.body,
+            item.chinese,
+            item.tai,
+            item.keywords,
+          ]
+            .join(" ")
+            .toLowerCase();
+          return terms.every((t) => hay.includes(t));
+        });
+        function hl(text, terms) {
+          terms.forEach((t) => {
+            const re = new RegExp(
+              "(" + t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")",
+              "gi",
+            );
+            text = text.replace(re, "<mark>$1</mark>");
+          });
+          return text;
+        }
+        const labels = { core: "Rules", hands: "Hands", calc: "Payout" };
+        res.innerHTML =
+          '<div class="search-count">' +
+          (hits.length || "No") +
+          " result" +
+          (hits.length !== 1 ? "s" : "") +
+          "</div>" +
+          hits
+            .map((h) => {
+              const snip = (h.body || h.keywords).slice(0, 110);
+              return `<div class="search-hit" onclick="jumpTo('${h.page}',this)">
+          <div class="search-hit-tag">${labels[h.page] || h.page}</div>
+          <div class="search-hit-title">${hl(h.title.replace(/[^\x00-\x7F]/g, "").trim() || h.title, terms)}</div>
+          <div class="search-hit-snippet">${hl(snip, terms)}${snip.length === 110 ? "…" : ""}</div>
+        </div>`;
+            })
+            .join("");
+        res.classList.add("visible");
+      }
+
+      function jumpTo(pageId, hitEl) {
+        const title = hitEl
+          .querySelector(".search-hit-title")
+          .textContent.trim();
+        clearSearch();
+        showPage(pageId);
+        setTimeout(() => {
+          const cards = document.querySelectorAll(
+            "#page-" + pageId + " [data-search]",
+          );
+          for (const c of cards) {
+            const ct = (
+              c.querySelector(".rule-label, .hand-name")?.textContent || ""
+            )
+              .replace(/[^\x00-\x7F]/g, "")
+              .trim();
+            if (ct && title.includes(ct.slice(0, 12))) {
+              c.scrollIntoView({ behavior: "smooth", block: "center" });
+              c.style.outline = "2px solid #888";
+              setTimeout(() => (c.style.outline = ""), 1400);
+              break;
+            }
+          }
+        }, 80);
+      }
+
+      function clearSearch() {
+        document.getElementById("search-input").value = "";
+        document.getElementById("search-clear").style.display = "none";
+        const res = document.getElementById("search-results");
+        res.classList.remove("visible");
+        res.innerHTML = "";
+      }
+
+      /* ── Calculator ────────────────────────────── */
+      let winType = "discard";
+
+      function setWinType(t) {
+        winType = t;
+        document
+          .getElementById("btn-discard")
+          .classList.toggle("sel", t === "discard");
+        document
+          .getElementById("btn-self")
+          .classList.toggle("sel", t === "self");
+        calcPayout();
+      }
+
+      function syncTaiInput(v) {
+        document.getElementById("tai-input").value = v;
+        document.getElementById("tai-display").textContent = v;
+        calcPayout();
+      }
+
+      function syncTaiSlider(v) {
+        const n = parseInt(v) || 0;
+        document.getElementById("tai-slider").value = Math.min(n, 50);
+        document.getElementById("tai-display").textContent = n;
+        calcPayout();
+      }
+
+      function calcPayout() {
+        const base = parseFloat(document.getElementById("base-val").value) || 0;
+        const taiVal =
+          parseFloat(document.getElementById("tai-val").value) || 0;
+        const minTai =
+          parseFloat(document.getElementById("min-tai").value) || 0;
+        let tai = parseFloat(document.getElementById("tai-input").value) || 0;
+        const dealer = document.getElementById("dealer-toggle").checked;
+        if (dealer) tai += 1;
+
+        const perPayer = base + tai * taiVal;
+        const payers = winType === "self" ? 3 : 1;
+        const total = perPayer * payers;
+        const below = tai < minTai;
+
+        document.getElementById("calc-amount").textContent = below
+          ? "—"
+          : "$" + perPayer.toLocaleString();
+        document.getElementById("calc-sublabel").textContent =
+          winType === "self" ? "per opponent (×3)" : "from the discarder";
+        document.getElementById("bd-base").textContent =
+          "$" + base.toLocaleString();
+        document.getElementById("bd-tai").textContent =
+          "$" + (tai * taiVal).toLocaleString();
+        document.getElementById("bd-payers").textContent =
+          payers + (payers > 1 ? " players" : " player");
+        document.getElementById("bd-total").textContent = below
+          ? "N/A"
+          : "$" + total.toLocaleString();
+        document.getElementById("calc-warning").style.display = below
+          ? "block"
+          : "none";
+        document.getElementById("calc-result").style.opacity = below
+          ? "0.45"
+          : "1";
+      }
+
+      window.addEventListener("DOMContentLoaded", () => {
+        buildIndex();
+        calcPayout();
+      });
+    </script>
+  </body>
+</html>
