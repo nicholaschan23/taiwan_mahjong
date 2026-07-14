@@ -63,27 +63,26 @@
       <div class="content">
         <div class="page-header">
           <div class="page-header-eyebrow">16-Tile Rules · Quick Reference</div>
-          <h1>Core Rules &amp; Scoring</h1>
+          <h1>Rules &amp; Scoring</h1>
           <div class="page-header-sub">
-            Payouts, winds, seat bonuses, and infractions. Hand patterns are on
-            the
-            <span
-              style="
-                text-decoration: underline;
-                cursor: pointer;
-                font-weight: 600;
-              "
-              onclick="showPage('hands')"
-              >Hands</span
-            >
-            page.
+            Start with the base rules to learn how to play, then move to advanced for scoring and payouts.
           </div>
         </div>
 
-        <!-- Collapsible Basics -->
-        <details class="basics-accordion" data-search="basics mahjong tiles suits honors winds dragons flowers chi peng gang meld draw discard wall">
-          <summary class="basics-toggle">Base Rules. Learn the fundamentals before diving into additional rules</summary>
-          <div class="basics-content">
+        <!-- Sub-tabs: Base / Advanced -->
+        <div class="rules-tabs">
+          <button class="rules-tab active" id="tab-base" onclick="showRulesTab('base')">Base</button>
+          <button class="rules-tab" id="tab-advanced" onclick="showRulesTab('advanced')">Advanced</button>
+        </div>
+
+        <!-- Base Rules Tab -->
+        <div class="rules-panel active" id="panel-base" data-search="basics mahjong tiles suits honors winds dragons flowers chi peng gang meld draw discard wall">
+
+          <!-- Components -->
+          <div class="section">
+            <div class="section-header">
+              <h2>Components</h2>
+            </div>
             <div class="rule-row">
               <div class="rule-label">Tiles <span class="tag tag-gray">牌 Pái</span></div>
               <div class="rule-body">
@@ -108,11 +107,37 @@
                 And 8 bonus tiles: <strong>花牌 Huā Pái</strong> (4 Flowers + 4 Seasons).
               </div>
             </div>
+            <div class="rule-row" style="border-bottom: none">
+              <div class="rule-label">Flowers <span class="tag tag-gray">花牌 Huā Pái</span></div>
+              <div class="rule-body">
+                Bonus tiles. When drawn, immediately set aside face-up and draw a replacement tile from the tail. They don't form melds.
+              </div>
+            </div>
+          </div>
+
+          <!-- Setup -->
+          <div class="section">
+            <div class="section-header">
+              <h2>Setup</h2>
+            </div>
             <div class="rule-row">
+              <div class="rule-label">Game Start <span class="tag tag-gray">開局 Kāi Jú</span></div>
+              <div class="rule-body">
+                The player physically sitting at the <strong>East</strong> side of the table is the first dealer.
+              </div>
+            </div>
+            <div class="rule-row" style="border-bottom: none">
               <div class="rule-label">The Wall <span class="tag tag-gray">牌牆 Pái Qiáng</span></div>
               <div class="rule-body">
-                Tiles are shuffled face-down into a square wall. Each player is dealt <strong>16 tiles</strong> (dealer goes first). The remaining tiles form the draw wall.
+                Tiles are shuffled face-down and arranged into a square wall, each side 18 tiles long and 2 tiles high. Each player's wall segment connects on the right end to the next player's wall; the left end stays open. The dealer rolls <strong>3 dice</strong>. The total determines which player's wall to break, counting counter-clockwise from the dealer. That player counts that many stacks from the right end of their wall and splits it there. The side you counted from becomes the <strong>tail</strong>. The other side is the <strong>draw wall</strong>. Each player is dealt <strong>16 tiles</strong> in batches of 4, starting with the dealer. If you start with any flowers, draw the replacement tiles in order from the dealer.
               </div>
+            </div>
+          </div>
+
+          <!-- Gameplay -->
+          <div class="section">
+            <div class="section-header">
+              <h2>Gameplay</h2>
             </div>
             <div class="rule-row">
               <div class="rule-label">Turn Flow <span class="tag tag-gray">出牌 Chū Pái</span></div>
@@ -131,7 +156,7 @@
                 <div class="hand-tiles" style="margin: 6px 0">
                   <div class="meld-group"><div class="t">七</div><div class="t">七</div><div class="t">七</div></div>
                 </div>
-                <strong>槓 Gàng</strong>: quad of 4 identical tiles. Declared openly or concealed; draw a replacement tile after.
+                <strong>槓 Gàng</strong>: quad of 4 identical tiles. Declared openly or concealed; draw a replacement tile from the tail after.
                 <div class="hand-tiles" style="margin: 6px 0">
                   <div class="meld-group"><div class="t red">中</div><div class="t red">中</div><div class="t red">中</div><div class="t red">中</div></div>
                 </div>
@@ -143,10 +168,23 @@
                 <strong>胡 Hú</strong> (Win) > <strong>槓 Gàng</strong> / <strong>碰 Pèng</strong> > <strong>吃 Chī</strong>. If multiple players want the same discard, higher priority wins. A win claim always takes precedence.
               </div>
             </div>
-            <div class="rule-row">
-              <div class="rule-label">Winning <span class="tag tag-gray">胡牌 Hú Pái</span></div>
+            <div class="rule-row" style="border-bottom: none">
+              <div class="rule-label">Dealer Rotation <span class="tag tag-gray">過莊 Guò Zhuāng</span></div>
               <div class="rule-body">
-                Complete a legal hand of <strong>5 melds + 1 pair</strong> (17 tiles total). Win by claiming a discard or drawing the tile yourself. Declare "胡!" (Hú) to win.
+                You stay as dealer if you win or the hand ends in a draw. Otherwise, the next player counter-clockwise becomes the new dealer.
+              </div>
+            </div>
+          </div>
+
+          <!-- Winning -->
+          <div class="section">
+            <div class="section-header">
+              <h2>Winning</h2>
+            </div>
+            <div class="rule-row" style="border-bottom: none">
+              <div class="rule-label">Winning Hand <span class="tag tag-gray">胡牌 Hú Pái</span></div>
+              <div class="rule-body">
+                Complete a legal hand of <strong>5 melds + 1 pair</strong> (17 tiles total). Win by claiming a discard or drawing the tile yourself. Declare <strong>胡! Hú</strong> to win.
                 <div class="hand-tiles" style="margin: 8px 0">
                   <div class="meld-group"><div class="t">一</div><div class="t">二</div><div class="t">三</div></div>
                   <div class="meld-sep"></div>
@@ -162,19 +200,63 @@
                 </div>
               </div>
             </div>
-            <div class="rule-row" style="border-bottom: none">
-              <div class="rule-label">Flowers <span class="tag tag-gray">花牌 Huā Pái</span></div>
-              <div class="rule-body">
-                Bonus tiles. When drawn, immediately set aside face-up and draw a replacement tile. They don't form melds but score bonus Tai (see Seat &amp; Flower section below).
-              </div>
-            </div>
           </div>
-        </details>
+        </div>
 
-        <!-- Section 1: Mechanics -->
+        <!-- Advanced Rules Tab -->
+        <div class="rules-panel" id="panel-advanced">
+
+        <!-- Scoring -->
         <div class="section">
           <div class="section-header">
-                        <h2>Payout</h2>
+            <h2>Scoring</h2>
+          </div>
+
+          <div
+            class="rule-row"
+            data-search="tai points scoring unit definition"
+          >
+            <div class="rule-label">
+              Tai <span class="tag tag-gray">台 Tái</span>
+            </div>
+            <div class="rule-body">
+              <strong>Tai</strong> is the point unit in Taiwan Mahjong. You earn Tai from your hand pattern, flowers, wind bonuses, and how you win. Your total Tai determines how much you get paid. See hand patterns
+              <span
+                style="
+                  text-decoration: underline;
+                  cursor: pointer;
+                  font-weight: 600;
+                "
+                onclick="showPage('hands')"
+                >here</span
+              >.
+            </div>
+          </div>
+        </div>
+
+        <!-- Wind Rounds -->
+        <div class="section">
+          <div class="section-header">
+            <h2>Wind Rounds</h2>
+          </div>
+
+          <div
+            class="rule-row"
+            data-search="wind rotation round east south west north prevailing"
+          >
+            <div class="rule-label">
+              Wind Rounds <span class="tag tag-gray">圈風 Quān Fēng</span>
+            </div>
+            <div class="rule-body">
+              A full game has 4 rounds. A round ends when all 4 players have been dealer at least once. Within a round, the dealer is always assigned the <strong>Round Wind</strong>; this can be tracked with the wind die. When a round ends, the Round Wind advances. A full game is at least <strong>16 hands</strong> (4 rounds × 4 players).
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 2: Payout -->
+        <div class="section">
+          <div class="section-header">
+            <h2>Payout</h2>
           </div>
 
           <div
@@ -183,8 +265,17 @@
           >
             <div class="rule-label">Payout Formula</div>
             <div class="rule-body">
-              Scoring is strictly linear with no exponential scaling. <strong>Tai</strong> (台 Tái) is the scoring unit.
-              <code class="formula-inline">Total = Base + (Total Tai × Tai Value)</code>
+              The payout per round is calculated using this formula: <code class="formula-inline">Total = Base + (Total Tai × Tai Value)</code><br>
+              Automatically calculate payout
+              <span
+                style="
+                  text-decoration: underline;
+                  cursor: pointer;
+                  font-weight: 600;
+                "
+                onclick="showPage('calc')"
+                >here</span
+              >.
             </div>
           </div>
 
@@ -196,7 +287,7 @@
               Win by Discard <span class="tag tag-gray">放銃 Fàng Chòng</span>
             </div>
             <div class="rule-body">
-              The player who discards the winning tile pays the
+              The player who discards your winning tile pays the
               <strong>full total alone</strong>. The other two players owe
               nothing.
             </div>
@@ -211,8 +302,8 @@
             </div>
             <div class="rule-body">
               You draw the winning tile yourself.
-              <strong>All three opponents each pay the full total</strong>,
-              tripling your earnings versus a discard win.
+              <strong>All three opponents each pay you the full total</strong>,
+              tripling your earnings compared to a discard win.
             </div>
           </div>
         </div>
@@ -231,7 +322,7 @@
               Dealer Advantage <span class="tag tag-gold">莊家 Zhuāng Jiā</span>
             </div>
             <div class="rule-body">
-              The active dealer always adds
+              If you're the dealer, you always add
               <span class="tag tag-gold">+1 Tai</span> to every hand. If a
               non-dealer wins, the dealer pays that extra Tai on top of the
               normal amount.
@@ -260,7 +351,17 @@
         <!-- Section 3: Seats, Winds, Flowers -->
         <div class="section">
           <div class="section-header">
-                        <h2>Seat, Wind &amp; Flower Association</h2>
+            <h2>Seat, Wind &amp; Flower Association</h2>
+          </div>
+
+          <div
+            class="rule-row"
+            data-search="seat wind compass direction assignment"
+          >
+            <div class="rule-label">Seat Winds</div>
+            <div class="rule-body">
+              Each player's seat wind and number matches the compass direction relative to the dealer's wind.
+            </div>
           </div>
 
           <div
@@ -326,20 +427,50 @@
               <span class="tag tag-gold">+1 Tai</span>. If your Seat Wind equals
               the Round Wind, they stack as a <strong>Double Wind</strong>
               <span class="tag tag-gold">+2 Tai</span>.
+              <div class="hand-tiles" style="margin: 8px 0">
+                <div class="meld-group"><div class="t wind">東</div><div class="t wind">東</div><div class="t wind">東</div></div>
+                <span style="margin: 0 8px; font-size: 12px; color: var(--muted)">Seat Wind = East →</span> <span class="tag tag-gold">+1 Tai</span>
+              </div>
+              <div class="hand-tiles" style="margin: 8px 0">
+                <div class="meld-group"><div class="t wind">南</div><div class="t wind">南</div><div class="t wind">南</div></div>
+                <span style="margin: 0 8px; font-size: 12px; color: var(--muted)">Round Wind = South →</span> <span class="tag tag-gold">+1 Tai</span>
+              </div>
+              <div class="hand-tiles" style="margin: 8px 0">
+                <div class="meld-group"><div class="t wind">東</div><div class="t wind">東</div><div class="t wind">東</div></div>
+                <span style="margin: 0 8px; font-size: 12px; color: var(--muted)">Seat + Round Wind both East →</span> <span class="tag tag-gold">+2 Tai</span>
+              </div>
             </div>
           </div>
 
           <div
             class="rule-row"
-            data-search="flower season proper scoring draw 1 tai 2 tai house rule"
+            data-search="flower season proper scoring draw 1 tai 2 tai no flowers all flowers instant win"
           >
             <div class="rule-label">Flower &amp; Season Scoring</div>
             <div class="rule-body">
-              Any flower tile drawn scores
-              <span class="tag tag-gold">+1 Tai</span>. Drawing your exact
-              proper flower or season (matching seat number) also scores
-              <span class="tag tag-gold">+1 Tai</span>. Some tables award
-              <strong>+2 Tai</strong> for an exact match (house rule).
+              Non-matching flowers score nothing. Scoring comes from having none, matching your seat, or collecting full sets.
+              <div class="hand-tiles" style="margin: 8px 0">
+                <span style="margin: 0 8px 0 0; font-size: 12px; color: var(--muted)">No flowers (無花) →</span> <span class="tag tag-gold">+1 Tai</span>
+              </div>
+              <div class="hand-tiles" style="margin: 8px 0">
+                <div class="meld-group"><div class="t flower">梅</div></div>
+                <span style="margin: 0 8px; font-size: 12px; color: var(--muted)">Seat 1 draws Plum →</span> <span class="tag tag-gold">+1 Tai</span> <span style="font-size: 12px; color: var(--muted)">per match</span>
+              </div>
+              <div class="hand-tiles" style="margin: 8px 0">
+                <div class="meld-group"><div class="t flower">梅</div><div class="t flower">蘭</div><div class="t flower">菊</div><div class="t flower">竹</div></div>
+                <span style="margin: 0 8px; font-size: 12px; color: var(--muted)">All 4 flowers →</span> <span class="tag tag-gold">+2 Tai</span>
+              </div>
+              <div class="hand-tiles" style="margin: 8px 0">
+                <div class="meld-group"><div class="t season">春</div><div class="t season">夏</div><div class="t season">秋</div><div class="t season">冬</div></div>
+                <span style="margin: 0 8px; font-size: 12px; color: var(--muted)">All 4 seasons →</span> <span class="tag tag-gold">+2 Tai</span>
+              </div>
+              <div class="hand-tiles" style="margin: 8px 0">
+                <div class="meld-group"><div class="t flower">梅</div><div class="t flower">蘭</div><div class="t flower">菊</div><div class="t flower">竹</div></div>
+                <span style="margin: 0 8px; font-size: 12px; color: var(--muted)">All 8 bonus tiles →</span> <span class="tag tag-gold">+8 Tai</span> <span style="font-size: 12px; color: var(--muted)">and instant win</span>
+              </div>
+              <div class="hand-tiles" style="margin: 4px 0 0 0">
+                <div class="meld-group"><div class="t season">春</div><div class="t season">夏</div><div class="t season">秋</div><div class="t season">冬</div></div>
+              </div>
             </div>
           </div>
         </div>
@@ -350,77 +481,77 @@
                         <h2>Violations &amp; Penalties</h2>
           </div>
 
-          <div data-search="minimum tai 0 tai limit table require win">
-            <div class="rule-row">
-              <div class="rule-label">Minimum Tai Rule</div>
-              <div class="rule-body">
-                Most tables require a minimum Tai count to win (commonly 1 or 3
-                Tai). Winning below the minimum counts as a Fake Win, even if
-                the hand structure is correct. Set your table's minimum in the
-                <span
-                  style="
-                    text-decoration: underline;
-                    cursor: pointer;
-                    font-weight: 600;
-                  "
-                  onclick="showPage('calc')"
-                  >Payout Calculator</span
-                >.
-              </div>
+          <div
+            class="rule-row"
+            data-search="minimum tai 0 tai limit table require win"
+          >
+            <div class="rule-label">Minimum Tai Rule</div>
+            <div class="rule-body">
+              Most tables require a minimum Tai count to win (commonly 1 or 3
+              Tai). Winning below the minimum counts as a Fake Win, even if
+              the hand structure is correct. Set your table's minimum in the
+              <span
+                style="
+                  text-decoration: underline;
+                  cursor: pointer;
+                  font-weight: 600;
+                "
+                onclick="showPage('calc')"
+                >Payout Calculator</span
+              >.
             </div>
           </div>
 
           <div
+            class="rule-row"
             data-search="fake win zha hu penalty pay all three players dealer forfeit round end"
           >
-            <div class="rule-row">
-              <div class="rule-label">
-                Fake Win <span class="tag tag-red">詐胡 Zhà Hú</span>
-              </div>
-              <div class="rule-body">
-                Declaring "Hu!" with an illegal hand or below the minimum Tai.
-                <div class="alert alert-red" style="margin-top: 8px">
-                  <div class="alert-title">Penalty</div>
-                  Round ends immediately. You pay all three opponents, each
-                  receives Base + a pre-agreed penalty Tai (typically 5, 10, or
-                  the table ceiling). Dealer forfeit the deal.
-                </div>
+            <div class="rule-label">
+              Fake Win <span class="tag tag-red">詐胡 Zhà Hú</span>
+            </div>
+            <div class="rule-body">
+              Declaring "Hu!" with an illegal hand or below the minimum Tai.
+              <div class="alert alert-red" style="margin-top: 8px">
+                <div class="alert-title">Penalty</div>
+                Round ends immediately. You pay all three opponents, each
+                receives Base + a pre-agreed penalty Tai (typically 5, 10, or
+                the table ceiling). Dealer forfeits the deal.
               </div>
             </div>
           </div>
 
           <div
+            class="rule-row"
             data-search="short hand long hand dead xiang gong tile count 16 disqualified"
           >
-            <div class="rule-row">
-              <div class="rule-label">
-                Short / Long Hand <span class="tag tag-red">相公 Xiāng Gōng</span>
-              </div>
-              <div class="rule-body">
-                Holding fewer or more than 16 tiles before winning.
-                <div class="alert alert-red" style="margin-top: 8px">
-                  <div class="alert-title">Penalty</div>
-                  Hand declared dead. You cannot win or call tiles this round,
-                  but must keep discarding. You still owe payment if someone
-                  else wins.
-                </div>
+            <div class="rule-label">
+              Short / Long Hand <span class="tag tag-red">相公 Xiāng Gōng</span>
+            </div>
+            <div class="rule-body">
+              Holding fewer or more than 16 tiles before winning.
+              <div class="alert alert-red" style="margin-top: 8px">
+                <div class="alert-title">Penalty</div>
+                Hand declared dead. You cannot win or call tiles this round,
+                but must keep discarding. You still owe payment if someone
+                else wins.
               </div>
             </div>
           </div>
 
           <div
+            class="rule-row"
             data-search="self draw etiquette tile touch floor invalid zi mo verify"
+            style="border-bottom: none"
           >
-            <div class="rule-row" style="border-bottom: none">
-              <div class="rule-label">Self-Draw Etiquette</div>
-              <div class="rule-body">
-                Keep the winning tile visibly separate from your hand until
-                verified. If it touches your tiles, falls on exposed melds, or
-                hits the floor before verification, the self-draw is invalidated
-                and in strict circles, treated as a Fake Win.
-              </div>
+            <div class="rule-label">Self-Draw Etiquette</div>
+            <div class="rule-body">
+              Keep the winning tile visibly separate from your hand until
+              verified. If it touches your tiles, falls on exposed melds, or
+              hits the floor before verification, the self-draw is invalidated
+              and in strict circles, treated as a Fake Win.
             </div>
           </div>
+        </div>
         </div>
       </div>
     </div>
@@ -1306,6 +1437,14 @@
     </div>
 
     <script>
+      /* ── Rules sub-tabs ────────────────────────── */
+      function showRulesTab(id) {
+        document.querySelectorAll(".rules-tab").forEach(t => t.classList.remove("active"));
+        document.querySelectorAll(".rules-panel").forEach(p => p.classList.remove("active"));
+        document.getElementById("tab-" + id).classList.add("active");
+        document.getElementById("panel-" + id).classList.add("active");
+      }
+
       /* ── Page routing ──────────────────────────── */
       function showPage(id) {
         document

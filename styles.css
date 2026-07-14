@@ -46,6 +46,7 @@ body {
 }
 .page.active {
   display: block;
+  animation: fadeIn 0.2s ease;
 }
 
 /* ── Navigation ───────────────────────────────── */
@@ -263,42 +264,41 @@ mark {
 }
 
 /* ── Basics accordion ─────────────────────────── */
-.basics-accordion {
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  margin-bottom: 28px;
-  overflow: hidden;
-}
-.basics-toggle {
+/* ── Rules sub-tabs ──────────────────────────── */
+.rules-tabs {
   display: flex;
-  align-items: center;
-  padding: 12px 16px;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text-2);
-  cursor: pointer;
-  background: var(--bg-subtle);
-  list-style: none;
-  transition: background 0.12s;
+  gap: 4px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0;
 }
-.basics-toggle::-webkit-details-marker {
+.rules-tab {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--text-3);
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 500;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: color 0.12s, border-color 0.12s;
+  margin-bottom: -1px;
+}
+.rules-tab:hover {
+  color: var(--text);
+}
+.rules-tab.active {
+  color: var(--text);
+  font-weight: 600;
+  border-bottom-color: var(--accent);
+}
+.rules-panel {
   display: none;
 }
-.basics-toggle::before {
-  content: "▸";
-  margin-right: 8px;
-  font-size: 11px;
-  transition: transform 0.15s;
-}
-.basics-accordion[open] .basics-toggle::before {
-  transform: rotate(90deg);
-}
-.basics-toggle:hover {
-  background: var(--bg-rule);
-}
-.basics-content {
-  padding: 0 16px 4px;
-  border-top: 1px solid var(--border);
+.rules-panel.active {
+  display: block;
+  animation: fadeIn 0.2s ease;
 }
 
 /* ── Section blocks ───────────────────────────── */
@@ -647,6 +647,12 @@ mark {
 .t.wind {
   color: #2b4c8c;
 }
+.t.flower {
+  color: var(--accent);
+}
+.t.season {
+  color: var(--green);
+}
 .t.pair {
   background: #f7f4ee;
   border-color: #b0ab9e;
@@ -883,4 +889,10 @@ hr.divider {
   border: none;
   border-top: 1px solid var(--border);
   margin: 24px 0;
+}
+
+/* ── Animations ──────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
 }
