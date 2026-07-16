@@ -239,7 +239,6 @@ mark {
 /* ── Page header ──────────────────────────────── */
 .page-header {
   padding-bottom: 20px;
-  border-bottom: 2px solid var(--text);
   margin-bottom: 28px;
 }
 .page-header-eyebrow {
@@ -267,12 +266,14 @@ mark {
 /* ── Rules sub-tabs ──────────────────────────── */
 .rules-tabs {
   display: flex;
-  gap: 4px;
+  gap: 0;
   margin-bottom: 24px;
+  width: 100%;
   border-bottom: 1px solid var(--border);
   padding-bottom: 0;
 }
 .rules-tab {
+  flex: 1;
   background: none;
   border: none;
   border-bottom: 2px solid transparent;
@@ -284,6 +285,7 @@ mark {
   cursor: pointer;
   transition: color 0.12s, border-color 0.12s;
   margin-bottom: -1px;
+  text-align: center;
 }
 .rules-tab:hover {
   color: var(--text);
