@@ -553,6 +553,35 @@ mark {
   background: var(--border);
 }
 
+/* ── Hand filters ────────────────────────────── */
+.hand-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+.filter-btn {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  color: var(--text-3);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 12px;
+  cursor: pointer;
+  transition: all 0.12s;
+}
+.filter-btn:hover {
+  color: var(--text);
+  border-color: var(--border-md);
+}
+.filter-btn.active {
+  background: var(--text);
+  color: var(--bg);
+  border-color: var(--text);
+}
+
 .hand-card {
   border: 1px solid var(--border);
   border-radius: var(--radius);

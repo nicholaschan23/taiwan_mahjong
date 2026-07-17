@@ -559,19 +559,30 @@
       <div class="content">
         <div class="page-header">
           <div class="page-header-eyebrow">Hand Rankings</div>
-          <h1>Winning Patterns</h1>
+          <h1>Scoring Patterns</h1>
           <div class="page-header-sub">
-            Most hands require 5 melds + 1 pair, but some special patterns break this structure. Tai values stack with each other.
+            All ways to earn Tai. Values stack unless noted otherwise.
           </div>
         </div>
 
+        <!-- Filter buttons -->
+        <div class="hand-filters">
+          <button class="filter-btn active" onclick="filterHands('all')">All</button>
+          <button class="filter-btn" onclick="filterHands('situational')">Situational</button>
+          <button class="filter-btn" onclick="filterHands('pattern')">Patterns</button>
+          <button class="filter-btn" onclick="filterHands('flush')">Flush</button>
+          <button class="filter-btn" onclick="filterHands('dragons-winds')">Dragons &amp; Winds</button>
+          <button class="filter-btn" onclick="filterHands('flowers')">Flowers</button>
+          <button class="filter-btn" onclick="filterHands('legendary')">Legendary</button>
+        </div>
+
         <!-- SITUATIONAL · 1 Tai -->
-        <div class="tier-header">
-          <span class="tier-label">Situational · 1 Tai</span>
+        <div class="tier-header" data-category="situational">
+          <span class="tier-label">Situational · 1–2 Tai</span>
           <div class="tier-rule"></div>
         </div>
 
-        <div class="hand-card" data-search="dealer zhuang jia 1 tai bonus">
+        <div class="hand-card" data-category="situational" data-search="dealer zhuang jia 1 tai bonus streak">
           <div class="hand-top">
             <div>
               <div class="hand-name">Dealer</div>
@@ -580,66 +591,11 @@
             <div class="tai tai-std">1 Tai</div>
           </div>
           <div class="hand-desc">
-            Being the dealer and winning. Stacks with dealer streaks (3, 5, 7 Tai for consecutive wins).
+            The dealer scores an extra Tai whether winning or dealing in. Consecutive deals: 2N+1 Tai (1 consecutive = 3, 2 = 5, etc.).
           </div>
         </div>
 
-        <div class="hand-card" data-search="dragon pung triplet red green white zhong fa bai 1 tai">
-          <div class="hand-top">
-            <div>
-              <div class="hand-name">Dragon Triplet</div>
-              <div class="hand-chinese">三元台 · Sān Yuán Tái</div>
-            </div>
-            <div class="tai tai-std">1 Tai each</div>
-          </div>
-          <div class="hand-desc">
-            Pung of Red (紅中), Green (青發), or White Dragons (白板).
-          </div>
-          <div class="hand-example">
-            <div class="hand-example-label">Example</div>
-            <div class="hand-tiles">
-              <div class="meld-group"><div class="t red">中</div><div class="t red">中</div><div class="t red">中</div></div>
-              <div class="meld-sep"></div>
-              <div class="meld-group"><div class="t grn">發</div><div class="t grn">發</div><div class="t grn">發</div></div>
-              <div class="meld-sep"></div>
-              <div class="meld-group"><div class="t">白</div><div class="t">白</div><div class="t">白</div></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="hand-card" data-search="wind pung triplet seat round 1 tai">
-          <div class="hand-top">
-            <div>
-              <div class="hand-name">Wind Triplet</div>
-              <div class="hand-chinese">風台 · Fēng Tái</div>
-            </div>
-            <div class="tai tai-std">1 Tai each</div>
-          </div>
-          <div class="hand-desc">
-            Pung of the Round Wind (風圈) or your Seat Wind (風位).
-          </div>
-          <div class="hand-example">
-            <div class="hand-example-label">Example</div>
-            <div class="hand-tiles">
-              <div class="meld-group"><div class="t wind">東</div><div class="t wind">東</div><div class="t wind">東</div></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="hand-card" data-search="ready hand ting pai declare listening 1 tai">
-          <div class="hand-top">
-            <div>
-              <div class="hand-name">Ready Hand</div>
-              <div class="hand-chinese">聽牌 · Tīng Pái</div>
-            </div>
-            <div class="tai tai-std">1 Tai</div>
-          </div>
-          <div class="hand-desc">
-            Calling Ting (announcing a ready hand) and winning.
-          </div>
-        </div>
-
-        <div class="hand-card" data-search="self draw zi mo 1 tai wall draw winning tile">
+        <div class="hand-card" data-category="situational" data-search="self draw zi mo tsumo 1 tai">
           <div class="hand-top">
             <div>
               <div class="hand-name">Self-Draw</div>
@@ -648,11 +604,11 @@
             <div class="tai tai-std">1 Tai</div>
           </div>
           <div class="hand-desc">
-            Self-draw winning tile.
+            Winning by drawing the winning tile yourself.
           </div>
         </div>
 
-        <div class="hand-card" data-search="concealed hand men qing closed no exposed melds 1 tai">
+        <div class="hand-card" data-category="situational" data-search="concealed hand men qing closed 1 tai">
           <div class="hand-top">
             <div>
               <div class="hand-name">Concealed Hand</div>
@@ -661,94 +617,73 @@
             <div class="tai tai-std">1 Tai</div>
           </div>
           <div class="hand-desc">
-            Hand is concealed when stealing tile for the win.
+            No claimed chows, no claimed pongs, no exposed kongs.
           </div>
         </div>
 
-        <div class="hand-card" data-search="flower seat matching position 1 tai">
+        <div class="hand-card" data-category="situational" data-search="single wait du ting edge closed pair 1 tai">
           <div class="hand-top">
             <div>
-              <div class="hand-name">Seat Flower</div>
-              <div class="hand-chinese">花牌 · Huā Pái</div>
-            </div>
-            <div class="tai tai-std">1 Tai each</div>
-          </div>
-          <div class="hand-desc">
-            Flower or Season that matches your seat position (1s=East, 2s=South, 3s=West, 4s=North).
-          </div>
-        </div>
-
-        <div class="hand-card" data-search="middle wait zhong dong center gap 1 tai">
-          <div class="hand-top">
-            <div>
-              <div class="hand-name">Middle Wait</div>
-              <div class="hand-chinese">中洞 · Zhōng Dòng</div>
+              <div class="hand-name">Single Wait</div>
+              <div class="hand-chinese">獨聽 · Dú Tīng</div>
             </div>
             <div class="tai tai-std">1 Tai</div>
           </div>
           <div class="hand-desc">
-            Waiting on a middle tile (e.g. 4 and 6 of Bams and you need the 5 Bams).
+            Only one specific tile completes your hand (edge wait, middle wait, or pair wait).
           </div>
           <div class="hand-example">
-            <div class="hand-example-label">Waiting on 五</div>
+            <div class="hand-example-label">Examples</div>
             <div class="hand-tiles">
               <div class="meld-group"><div class="t">四</div><div class="t" style="opacity:0.4">五</div><div class="t">六</div></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="hand-card" data-search="edge wait bian zhang terminal 1 tai">
-          <div class="hand-top">
-            <div>
-              <div class="hand-name">Edge Wait</div>
-              <div class="hand-chinese">邊張 · Biān Zhāng</div>
-            </div>
-            <div class="tai tai-std">1 Tai</div>
-          </div>
-          <div class="hand-desc">
-            Waiting on an edge tile (e.g. 1 and 2 of Dots and you need the 3 Dots).
-          </div>
-          <div class="hand-example">
-            <div class="hand-example-label">Waiting on 三</div>
-            <div class="hand-tiles">
+              <div class="meld-sep"></div>
               <div class="meld-group"><div class="t">一</div><div class="t">二</div><div class="t" style="opacity:0.4">三</div></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="hand-card" data-search="single wait dan diao pair eyes 1 tai">
-          <div class="hand-top">
-            <div>
-              <div class="hand-name">Pair Wait</div>
-              <div class="hand-chinese">單釣 · Dān Diào</div>
-            </div>
-            <div class="tai tai-std">1 Tai</div>
-          </div>
-          <div class="hand-desc">
-            Waiting on a single tile to complete the pair.
-          </div>
-          <div class="hand-example">
-            <div class="hand-example-label">Waiting on 三</div>
-            <div class="hand-tiles">
+              <div class="meld-sep"></div>
               <div class="meld-group"><div class="t pair">三</div><div class="t" style="opacity:0.4">三</div></div>
             </div>
           </div>
         </div>
 
-        <div class="hand-card" data-search="half begging ban qiu ren open melds self draw 1 tai">
+        <div class="hand-card" data-category="situational" data-search="fully exposed all melded quan qiu ren 1 tai">
           <div class="hand-top">
             <div>
-              <div class="hand-name">Half Begging</div>
-              <div class="hand-chinese">半求人 · Bàn Qiú Rén</div>
+              <div class="hand-name">Fully Exposed Hand</div>
+              <div class="hand-chinese">全求人 · Quán Qiú Rén</div>
             </div>
             <div class="tai tai-std">1 Tai</div>
           </div>
           <div class="hand-desc">
-            Every meld formed from discards, but the winning tile was self-drawn.
+            Entire hand claimed through chows and pongs, and the win is not self-drawn.
           </div>
         </div>
 
-        <div class="hand-card" data-search="robbing kong qiang gang steal win 1 tai">
+        <div class="hand-card" data-category="situational" data-search="last discard he di lao yu 1 tai">
+          <div class="hand-top">
+            <div>
+              <div class="hand-name">Win on Last Discard</div>
+              <div class="hand-chinese">河底撈魚 · Hé Dǐ Lāo Yú</div>
+            </div>
+            <div class="tai tai-std">1 Tai</div>
+          </div>
+          <div class="hand-desc">
+            Winning off the very last discarded tile of the game.
+          </div>
+        </div>
+
+        <div class="hand-card" data-category="situational" data-search="last draw hai di lao yue wall 1 tai">
+          <div class="hand-top">
+            <div>
+              <div class="hand-name">Win on Last Draw</div>
+              <div class="hand-chinese">海底撈月 · Hǎi Dǐ Lāo Yuè</div>
+            </div>
+            <div class="tai tai-std">1 Tai</div>
+          </div>
+          <div class="hand-desc">
+            Self-drawing the very last tile from the wall.
+          </div>
+        </div>
+
+        <div class="hand-card" data-category="situational" data-search="robbing kong qiang gang steal 1 tai">
           <div class="hand-top">
             <div>
               <div class="hand-name">Robbing the Kong</div>
@@ -757,65 +692,52 @@
             <div class="tai tai-std">1 Tai</div>
           </div>
           <div class="hand-desc">
-            If someone declares Kong on the tile you need to win, you can steal it.
+            Winning when an opponent adds to an exposed kong and that tile completes your hand.
           </div>
         </div>
 
-        <div class="hand-card" data-search="last tile hai di lao yue sea bottom moon wall 1 tai">
+        <div class="hand-card" data-category="situational" data-search="kong bloom gang shang zi mo replacement 2 tai">
           <div class="hand-top">
             <div>
-              <div class="hand-name">Last Tile Win</div>
-              <div class="hand-chinese">海底撈月 · Hǎi Dǐ Lāo Yuè</div>
-            </div>
-            <div class="tai tai-std">1 Tai</div>
-          </div>
-          <div class="hand-desc">
-            Catching the last possible tile in the wall for a win (or last possible discard).
-          </div>
-        </div>
-
-        <div class="hand-card" data-search="win off replacement kong flower gang shang kai hua 1 tai">
-          <div class="hand-top">
-            <div>
-              <div class="hand-name">Win off Replacement</div>
-              <div class="hand-chinese">槓上開花 · Gàng Shàng Kāi Huā</div>
-            </div>
-            <div class="tai tai-std">1 Tai</div>
-          </div>
-          <div class="hand-desc">
-            Winning off a replacement tile drawn after declaring a Flower/Season or Kong.
-          </div>
-        </div>
-
-        <!-- BASIC · 2–3 Tai -->
-        <div class="tier-header">
-          <span class="tier-label">Basic · 2–3 Tai</span>
-          <div class="tier-rule"></div>
-        </div>
-
-        <div class="hand-card" data-search="all begging quan qiu ren open melds discard win 2 tai">
-          <div class="hand-top">
-            <div>
-              <div class="hand-name">All Begging</div>
-              <div class="hand-chinese">全求人 · Quán Qiú Rén</div>
+              <div class="hand-name">Kong Bloom</div>
+              <div class="hand-chinese">槓上自摸 · Gàng Shàng Zì Mō</div>
             </div>
             <div class="tai tai-std">2 Tai</div>
           </div>
           <div class="hand-desc">
-            Every meld formed from discards, and the winning tile was also stolen.
+            Self-drawing a winning tile on the replacement draw after declaring a flower, adding to a kong, or concealed kong. Includes Self-Draw.
           </div>
         </div>
 
-        <div class="hand-card" data-search="all chows ping hu sequences no triplets 2 tai">
+        <div class="hand-card" data-category="situational" data-search="concealed self draw men qing zi mo 3 tai">
           <div class="hand-top">
             <div>
-              <div class="hand-name">All Chows</div>
+              <div class="hand-name">Concealed Self-Draw</div>
+              <div class="hand-chinese">門清自摸 · Mén Qīng Zì Mō</div>
+            </div>
+            <div class="tai tai-std">3 Tai</div>
+          </div>
+          <div class="hand-desc">
+            Concealed hand + self-drawn win. Includes 門清 (1) + 自摸 (1) + 不求人 (1) = 3 Tai total.
+          </div>
+        </div>
+
+        <!-- PATTERNS · 2–5 Tai -->
+        <div class="tier-header" data-category="pattern">
+          <span class="tier-label">Patterns · 2–5 Tai</span>
+          <div class="tier-rule"></div>
+        </div>
+
+        <div class="hand-card" data-category="pattern" data-search="all chows ping hu sequences 2 tai">
+          <div class="hand-top">
+            <div>
+              <div class="hand-name">All Sequences</div>
               <div class="hand-chinese">平胡 · Píng Hú</div>
             </div>
             <div class="tai tai-std">2 Tai</div>
           </div>
           <div class="hand-desc">
-            All Chow Hand. The final wait must be a 2-sided wait, no edge waits, no self-draw.
+            No honor tiles, no flower tiles, no triplets, not a single-wait, not self-drawn, must be waiting on both ends.
           </div>
           <div class="hand-example">
             <div class="hand-example-label">Example</div>
@@ -835,16 +757,16 @@
           </div>
         </div>
 
-        <div class="hand-card" data-search="three concealed pungs san an ke 2 tai">
+        <div class="hand-card" data-category="pattern" data-search="three concealed triplets san an ke 2 tai">
           <div class="hand-top">
             <div>
-              <div class="hand-name">Three Concealed Pungs</div>
+              <div class="hand-name">Three Concealed Triplets</div>
               <div class="hand-chinese">三暗刻 · Sān Àn Kè</div>
             </div>
             <div class="tai tai-std">2 Tai</div>
           </div>
           <div class="hand-desc">
-            Three concealed triplets.
+            Three self-drawn triplets (or concealed kongs).
           </div>
           <div class="hand-example">
             <div class="hand-example-label">Example (dashed = concealed)</div>
@@ -856,26 +778,7 @@
           </div>
         </div>
 
-        <div class="hand-card" data-search="concealed self draw men qing zi mo 3 tai">
-          <div class="hand-top">
-            <div>
-              <div class="hand-name">Concealed Self-Draw</div>
-              <div class="hand-chinese">門清自摸 · Mén Qīng Zì Mō</div>
-            </div>
-            <div class="tai tai-std">3 Tai</div>
-          </div>
-          <div class="hand-desc">
-            Hand is concealed when you self-draw the winning tile.
-          </div>
-        </div>
-
-        <!-- INTERMEDIATE · 4–5 Tai -->
-        <div class="tier-header">
-          <span class="tier-label">Intermediate · 4–5 Tai</span>
-          <div class="tier-rule"></div>
-        </div>
-
-        <div class="hand-card" data-search="all triplets peng peng hu pung hand 4 tai">
+        <div class="hand-card" data-category="pattern" data-search="all triplets peng peng hu pong 4 tai">
           <div class="hand-top">
             <div>
               <div class="hand-name">All Triplets</div>
@@ -884,7 +787,7 @@
             <div class="tai tai-std">4 Tai</div>
           </div>
           <div class="hand-desc">
-            5 sets of Pungs + pair.
+            Entire hand consists of triplets (or kongs) + pair.
           </div>
           <div class="hand-example">
             <div class="hand-example-label">Example</div>
@@ -904,16 +807,71 @@
           </div>
         </div>
 
-        <div class="hand-card" data-search="half flush hun yi se one suit honors 4 tai">
+        <div class="hand-card" data-category="pattern" data-search="four concealed triplets si an ke 5 tai">
+          <div class="hand-top">
+            <div>
+              <div class="hand-name">Four Concealed Triplets</div>
+              <div class="hand-chinese">四暗刻 · Sì Àn Kè</div>
+            </div>
+            <div class="tai tai-std">5 Tai</div>
+          </div>
+          <div class="hand-desc">
+            Four concealed triplets (or concealed kongs).
+          </div>
+          <div class="hand-example">
+            <div class="hand-example-label">Example (dashed = concealed)</div>
+            <div class="hand-tiles">
+              <div class="concealed-group"><div class="t">二</div><div class="t">二</div><div class="t">二</div></div>
+              <div class="concealed-group"><div class="t">五</div><div class="t">五</div><div class="t">五</div></div>
+              <div class="concealed-group"><div class="t">七</div><div class="t">七</div><div class="t">七</div></div>
+              <div class="concealed-group"><div class="t">九</div><div class="t">九</div><div class="t">九</div></div>
+              <div class="meld-sep"></div>
+              <div class="meld-group"><div class="t pair">三</div><div class="t pair">三</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hand-card" data-category="pattern" data-search="five concealed triplets wu an ke 8 tai">
+          <div class="hand-top">
+            <div>
+              <div class="hand-name">Five Concealed Triplets</div>
+              <div class="hand-chinese">五暗刻 · Wǔ Àn Kè</div>
+            </div>
+            <div class="tai tai-high">8 Tai</div>
+          </div>
+          <div class="hand-desc">
+            Five concealed triplets (or concealed kongs).
+          </div>
+          <div class="hand-example">
+            <div class="hand-example-label">Example (all concealed)</div>
+            <div class="hand-tiles">
+              <div class="concealed-group"><div class="t">二</div><div class="t">二</div><div class="t">二</div></div>
+              <div class="concealed-group"><div class="t">四</div><div class="t">四</div><div class="t">四</div></div>
+              <div class="concealed-group"><div class="t">七</div><div class="t">七</div><div class="t">七</div></div>
+              <div class="concealed-group"><div class="t">九</div><div class="t">九</div><div class="t">九</div></div>
+              <div class="concealed-group"><div class="t">一</div><div class="t">一</div><div class="t">一</div></div>
+              <div class="meld-sep"></div>
+              <div class="meld-group"><div class="t pair">五</div><div class="t pair">五</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FLUSH · 4–8 Tai -->
+        <div class="tier-header" data-category="flush">
+          <span class="tier-label">Flush · 4–8 Tai</span>
+          <div class="tier-rule"></div>
+        </div>
+
+        <div class="hand-card" data-category="flush" data-search="half flush hun yi se one suit honors 4 tai">
           <div class="hand-top">
             <div>
               <div class="hand-name">Half Flush</div>
-              <div class="hand-chinese">湊一色 · Còu Yī Sè</div>
+              <div class="hand-chinese">混一色 · Hùn Yī Sè</div>
             </div>
             <div class="tai tai-std">4 Tai</div>
           </div>
           <div class="hand-desc">
-            All one suit + honors.
+            One suit + honor tiles only.
           </div>
           <div class="hand-example">
             <div class="hand-example-label">Example</div>
@@ -933,73 +891,7 @@
           </div>
         </div>
 
-        <div class="hand-card" data-search="small three dragons xiao san yuan 4 tai">
-          <div class="hand-top">
-            <div>
-              <div class="hand-name">Small Three Dragons</div>
-              <div class="hand-chinese">小三元 · Xiǎo Sān Yuán</div>
-            </div>
-            <div class="tai tai-std">4 Tai</div>
-          </div>
-          <div class="hand-desc">
-            Pungs of 2 Dragons and Pair of the third.
-          </div>
-          <div class="hand-example">
-            <div class="hand-example-label">Example</div>
-            <div class="hand-tiles">
-              <div class="meld-group"><div class="t red">中</div><div class="t red">中</div><div class="t red">中</div></div>
-              <div class="meld-sep"></div>
-              <div class="meld-group"><div class="t grn">發</div><div class="t grn">發</div><div class="t grn">發</div></div>
-              <div class="meld-sep"></div>
-              <div class="meld-group"><div class="t pair">白</div><div class="t pair">白</div></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="hand-card" data-search="four concealed pungs si an ke 5 tai">
-          <div class="hand-top">
-            <div>
-              <div class="hand-name">Four Concealed Pungs</div>
-              <div class="hand-chinese">四暗刻 · Sì Àn Kè</div>
-            </div>
-            <div class="tai tai-std">5 Tai</div>
-          </div>
-          <div class="hand-desc">
-            Four concealed triplets.
-          </div>
-          <div class="hand-example">
-            <div class="hand-example-label">Example (dashed = concealed)</div>
-            <div class="hand-tiles">
-              <div class="concealed-group"><div class="t">二</div><div class="t">二</div><div class="t">二</div></div>
-              <div class="concealed-group"><div class="t">五</div><div class="t">五</div><div class="t">五</div></div>
-              <div class="concealed-group"><div class="t">七</div><div class="t">七</div><div class="t">七</div></div>
-              <div class="concealed-group"><div class="t">九</div><div class="t">九</div><div class="t">九</div></div>
-              <div class="meld-sep"></div>
-              <div class="meld-group"><div class="t pair">三</div><div class="t pair">三</div></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="hand-card" data-search="early listening di ting ready first turn 4 tai">
-          <div class="hand-top">
-            <div>
-              <div class="hand-name">Early Listening</div>
-              <div class="hand-chinese">地聽 · Dì Tīng</div>
-            </div>
-            <div class="tai tai-std">4 Tai</div>
-          </div>
-          <div class="hand-desc">
-            Player declares Ting (ready hand) on their initial draw/discard.
-          </div>
-        </div>
-
-        <!-- ADVANCED · 8 Tai -->
-        <div class="tier-header">
-          <span class="tier-label">Advanced · 8 Tai</span>
-          <div class="tier-rule"></div>
-        </div>
-
-        <div class="hand-card" data-search="full flush qing yi se one suit no honors 8 tai">
+        <div class="hand-card" data-category="flush" data-search="full flush qing yi se one suit no honors 8 tai">
           <div class="hand-top">
             <div>
               <div class="hand-name">Full Flush</div>
@@ -1008,7 +900,7 @@
             <div class="tai tai-high">8 Tai</div>
           </div>
           <div class="hand-desc">
-            All one suit (no honors).
+            One suit only, no honors.
           </div>
           <div class="hand-example">
             <div class="hand-example-label">Example</div>
@@ -1028,7 +920,7 @@
           </div>
         </div>
 
-        <div class="hand-card" data-search="all honors zi yi se winds dragons only 8 tai">
+        <div class="hand-card" data-category="flush" data-search="all honors zi yi se winds dragons 8 tai">
           <div class="hand-top">
             <div>
               <div class="hand-name">All Honors</div>
@@ -1037,7 +929,7 @@
             <div class="tai tai-high">8 Tai</div>
           </div>
           <div class="hand-desc">
-            All winds + dragons only.
+            Entire hand is honor tiles only (winds + dragons).
           </div>
           <div class="hand-example">
             <div class="hand-example-label">Example</div>
@@ -1057,16 +949,22 @@
           </div>
         </div>
 
-        <div class="hand-card" data-search="big three dragons da san yuan pungs all 3 8 tai">
+        <!-- DRAGONS & WINDS · 1–16 Tai -->
+        <div class="tier-header" data-category="dragons-winds">
+          <span class="tier-label">Dragons &amp; Winds · 1–16 Tai</span>
+          <div class="tier-rule"></div>
+        </div>
+
+        <div class="hand-card" data-category="dragons-winds" data-search="dragon triplet san yuan pai red green white 1 tai">
           <div class="hand-top">
             <div>
-              <div class="hand-name">Big Three Dragons</div>
-              <div class="hand-chinese">大三元 · Dà Sān Yuán</div>
+              <div class="hand-name">Dragon Triplet</div>
+              <div class="hand-chinese">三元牌 · Sān Yuán Pái</div>
             </div>
-            <div class="tai tai-high">8 Tai</div>
+            <div class="tai tai-std">1 Tai each</div>
           </div>
           <div class="hand-desc">
-            Pungs of all 3 Dragons.
+            Triplet (or kong) of any Dragon: Red (中), Green (發), or White (白).
           </div>
           <div class="hand-example">
             <div class="hand-example-label">Example</div>
@@ -1080,16 +978,88 @@
           </div>
         </div>
 
-        <div class="hand-card" data-search="little four winds xiao si xi pungs 3 winds pair 8 tai">
+        <div class="hand-card" data-category="dragons-winds" data-search="round wind quan feng triplet 1 tai">
           <div class="hand-top">
             <div>
-              <div class="hand-name">Little Four Winds</div>
+              <div class="hand-name">Round Wind</div>
+              <div class="hand-chinese">圈風牌 · Quān Fēng Pái</div>
+            </div>
+            <div class="tai tai-std">1 Tai</div>
+          </div>
+          <div class="hand-desc">
+            Triplet (or kong) of the current round wind.
+          </div>
+        </div>
+
+        <div class="hand-card" data-category="dragons-winds" data-search="seat wind feng wei triplet 1 tai">
+          <div class="hand-top">
+            <div>
+              <div class="hand-name">Seat Wind</div>
+              <div class="hand-chinese">風位牌 · Fēng Wèi Pái</div>
+            </div>
+            <div class="tai tai-std">1 Tai</div>
+          </div>
+          <div class="hand-desc">
+            Triplet (or kong) of your seat wind.
+          </div>
+        </div>
+
+        <div class="hand-card" data-category="dragons-winds" data-search="small three dragons xiao san yuan 4 tai">
+          <div class="hand-top">
+            <div>
+              <div class="hand-name">Small Three Dragons</div>
+              <div class="hand-chinese">小三元 · Xiǎo Sān Yuán</div>
+            </div>
+            <div class="tai tai-std">4 Tai</div>
+          </div>
+          <div class="hand-desc">
+            Two triplets of dragons + pair of the third dragon as eyes. Does not stack with individual Dragon Triplet Tai.
+          </div>
+          <div class="hand-example">
+            <div class="hand-example-label">Example</div>
+            <div class="hand-tiles">
+              <div class="meld-group"><div class="t red">中</div><div class="t red">中</div><div class="t red">中</div></div>
+              <div class="meld-sep"></div>
+              <div class="meld-group"><div class="t grn">發</div><div class="t grn">發</div><div class="t grn">發</div></div>
+              <div class="meld-sep"></div>
+              <div class="meld-group"><div class="t pair">白</div><div class="t pair">白</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hand-card" data-category="dragons-winds" data-search="big three dragons da san yuan 8 tai">
+          <div class="hand-top">
+            <div>
+              <div class="hand-name">Big Three Dragons</div>
+              <div class="hand-chinese">大三元 · Dà Sān Yuán</div>
+            </div>
+            <div class="tai tai-high">8 Tai</div>
+          </div>
+          <div class="hand-desc">
+            Three triplets of all three dragons. Does not stack with individual Dragon Triplet Tai.
+          </div>
+          <div class="hand-example">
+            <div class="hand-example-label">Example</div>
+            <div class="hand-tiles">
+              <div class="meld-group"><div class="t red">中</div><div class="t red">中</div><div class="t red">中</div></div>
+              <div class="meld-sep"></div>
+              <div class="meld-group"><div class="t grn">發</div><div class="t grn">發</div><div class="t grn">發</div></div>
+              <div class="meld-sep"></div>
+              <div class="meld-group"><div class="t">白</div><div class="t">白</div><div class="t">白</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hand-card" data-category="dragons-winds" data-search="small four winds xiao si xi 8 tai">
+          <div class="hand-top">
+            <div>
+              <div class="hand-name">Small Four Winds</div>
               <div class="hand-chinese">小四喜 · Xiǎo Sì Xǐ</div>
             </div>
             <div class="tai tai-high">8 Tai</div>
           </div>
           <div class="hand-desc">
-            Pungs of 3 of the winds and pair of the fourth.
+            Three triplets of winds + pair of the fourth wind as eyes.
           </div>
           <div class="hand-example">
             <div class="hand-example-label">Example</div>
@@ -1105,93 +1075,7 @@
           </div>
         </div>
 
-        <div class="hand-card" data-search="five concealed pungs wu an ke all closed 8 tai">
-          <div class="hand-top">
-            <div>
-              <div class="hand-name">Five Concealed Pungs</div>
-              <div class="hand-chinese">五暗刻 · Wǔ Àn Kè</div>
-            </div>
-            <div class="tai tai-high">8 Tai</div>
-          </div>
-          <div class="hand-desc">
-            All five melds are concealed triplets.
-          </div>
-          <div class="hand-example">
-            <div class="hand-example-label">Example (all concealed)</div>
-            <div class="hand-tiles">
-              <div class="concealed-group"><div class="t">二</div><div class="t">二</div><div class="t">二</div></div>
-              <div class="concealed-group"><div class="t">四</div><div class="t">四</div><div class="t">四</div></div>
-              <div class="concealed-group"><div class="t">七</div><div class="t">七</div><div class="t">七</div></div>
-              <div class="concealed-group"><div class="t">九</div><div class="t">九</div><div class="t">九</div></div>
-              <div class="concealed-group"><div class="t">一</div><div class="t">一</div><div class="t">一</div></div>
-              <div class="meld-sep"></div>
-              <div class="meld-group"><div class="t pair">五</div><div class="t pair">五</div></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="hand-card" data-search="all 8 flowers seasons ba xian guo hai instant win 8 tai">
-          <div class="hand-top">
-            <div>
-              <div class="hand-name">All 8 Flowers</div>
-              <div class="hand-chinese">八仙過海 · Bā Xiān Guò Hǎi</div>
-            </div>
-            <div class="tai tai-high">8 Tai</div>
-          </div>
-          <div class="hand-desc">
-            All 8 Flowers + Seasons. Instant win.
-          </div>
-        </div>
-
-        <div class="hand-card" data-search="seven flowers steal eighth qi qiang yi 8 tai">
-          <div class="hand-top">
-            <div>
-              <div class="hand-name">Seven Rob One</div>
-              <div class="hand-chinese">七搶一 · Qī Qiǎng Yī</div>
-            </div>
-            <div class="tai tai-high">8 Tai</div>
-          </div>
-          <div class="hand-desc">
-            Seven Flowers + Seasons and steal the 8th. Can happen two ways:
-            <ul style="margin: 6px 0 0 16px; font-size: 13px; line-height: 1.6">
-              <li>You have 7, and someone else draws the last one. You rob it, draw your replacement tile to reach 17 tiles, then count.</li>
-              <li>You have 6, another player has 1. You draw the last flower, set it aside, draw your replacement, then declare robbing the flower from the player with 1.</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="hand-card" data-search="flower win rules replacement draw mechanic">
-          <div class="hand-top">
-            <div>
-              <div class="hand-name">Flower Win Rules</div>
-              <div class="hand-chinese">花牌贏法</div>
-            </div>
-          </div>
-          <div class="hand-desc">
-            To complete a flower win (八仙過海 or 七搶一), you must finish your replacement draw first, then declare win. Flowers and seasons are not part of your 17-tile hand. If your hand can also legitimately win at that moment, those Tai count too.
-          </div>
-        </div>
-
-        <div class="hand-card" data-search="human hand ren hu first round discard 8 tai">
-          <div class="hand-top">
-            <div>
-              <div class="hand-name">Human Hand</div>
-              <div class="hand-chinese">人胡 · Rén Hú</div>
-            </div>
-            <div class="tai tai-high">8 Tai</div>
-          </div>
-          <div class="hand-desc">
-            Non-dealer wins with their initial hand plus a discard from the first round of play.
-          </div>
-        </div>
-
-        <!-- LEGENDARY · 16–24 Tai -->
-        <div class="tier-header">
-          <span class="tier-label">Legendary · 16–24 Tai</span>
-          <div class="tier-rule"></div>
-        </div>
-
-        <div class="hand-card" data-search="big four winds da si xi pungs all 4 winds 16 tai">
+        <div class="hand-card" data-category="dragons-winds" data-search="big four winds da si xi 16 tai">
           <div class="hand-top">
             <div>
               <div class="hand-name">Big Four Winds</div>
@@ -1200,7 +1084,7 @@
             <div class="tai tai-high">16 Tai</div>
           </div>
           <div class="hand-desc">
-            Pungs of all 4 winds.
+            Four triplets of all four winds. Does not stack with Round Wind or Seat Wind Tai.
           </div>
           <div class="hand-example">
             <div class="hand-example-label">Example</div>
@@ -1216,33 +1100,149 @@
           </div>
         </div>
 
-        <div class="hand-card" data-search="earthly hand di hu non dealer first draw 16 tai">
+        <!-- FLOWERS · 1–8 Tai -->
+        <div class="tier-header" data-category="flowers">
+          <span class="tier-label">Flowers · 1–8 Tai</span>
+          <div class="tier-rule"></div>
+        </div>
+
+        <div class="hand-card" data-category="flowers" data-search="matching flower seat position 1 tai">
           <div class="hand-top">
             <div>
-              <div class="hand-name">Earthly Hand</div>
+              <div class="hand-name">Matching Flower</div>
+              <div class="hand-chinese">正花牌 · Zhèng Huā Pái</div>
+            </div>
+            <div class="tai tai-std">1 Tai each</div>
+          </div>
+          <div class="hand-desc">
+            Flower or season tile matching your seat wind.
+          </div>
+          <div class="hand-example">
+            <div class="hand-example-label">Seat → Flower / Season</div>
+            <div class="hand-tiles">
+              <div class="meld-group"><div class="t wind">東</div></div>
+              <span style="margin: 0 6px; font-size: 12px; color: var(--muted)">→</span>
+              <div class="meld-group"><div class="t flower">梅</div><div class="t season">春</div></div>
+            </div>
+            <div class="hand-tiles" style="margin-top: 6px">
+              <div class="meld-group"><div class="t wind">南</div></div>
+              <span style="margin: 0 6px; font-size: 12px; color: var(--muted)">→</span>
+              <div class="meld-group"><div class="t flower">蘭</div><div class="t season">夏</div></div>
+            </div>
+            <div class="hand-tiles" style="margin-top: 6px">
+              <div class="meld-group"><div class="t wind">西</div></div>
+              <span style="margin: 0 6px; font-size: 12px; color: var(--muted)">→</span>
+              <div class="meld-group"><div class="t flower">菊</div><div class="t season">秋</div></div>
+            </div>
+            <div class="hand-tiles" style="margin-top: 6px">
+              <div class="meld-group"><div class="t wind">北</div></div>
+              <span style="margin: 0 6px; font-size: 12px; color: var(--muted)">→</span>
+              <div class="meld-group"><div class="t flower">竹</div><div class="t season">冬</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hand-card" data-category="flowers" data-search="flower kong all four set season plant 1 tai">
+          <div class="hand-top">
+            <div>
+              <div class="hand-name">Flower Kong</div>
+              <div class="hand-chinese">花槓 · Huā Gàng</div>
+            </div>
+            <div class="tai tai-std">1 Tai</div>
+          </div>
+          <div class="hand-desc">
+            Holding all four of either the season set (春夏秋冬) or the plant set (梅蘭菊竹).
+          </div>
+          <div class="hand-example">
+            <div class="hand-example-label">Example</div>
+            <div class="hand-tiles">
+              <div class="meld-group"><div class="t flower">梅</div><div class="t flower">蘭</div><div class="t flower">菊</div><div class="t flower">竹</div></div>
+              <div class="meld-sep"></div>
+              <div class="meld-group"><div class="t season">春</div><div class="t season">夏</div><div class="t season">秋</div><div class="t season">冬</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hand-card" data-category="flowers" data-search="seven rob one qi qiang yi 8 tai flowers">
+          <div class="hand-top">
+            <div>
+              <div class="hand-name">Seven Rob One</div>
+              <div class="hand-chinese">七搶一 · Qī Qiǎng Yī</div>
+            </div>
+            <div class="tai tai-high">8 Tai</div>
+          </div>
+          <div class="hand-desc">
+            Collecting 7 flower tiles counts as winning against the player holding the 8th. You must complete your replacement draw first, then declare win.
+          </div>
+        </div>
+
+        <div class="hand-card" data-category="flowers" data-search="eight immortals ba xian guo hai all flowers 8 tai">
+          <div class="hand-top">
+            <div>
+              <div class="hand-name">Eight Immortals</div>
+              <div class="hand-chinese">八仙過海 · Bā Xiān Guò Hǎi</div>
+            </div>
+            <div class="tai tai-high">8 Tai</div>
+          </div>
+          <div class="hand-desc">
+            Collecting all 8 flower tiles counts as a self-drawn win. Complete your replacement draw first, then declare.
+          </div>
+          <div class="hand-example">
+            <div class="hand-example-label">All 8 bonus tiles</div>
+            <div class="hand-tiles">
+              <div class="meld-group"><div class="t flower">梅</div><div class="t flower">蘭</div><div class="t flower">菊</div><div class="t flower">竹</div><div class="t season">春</div><div class="t season">夏</div><div class="t season">秋</div><div class="t season">冬</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- LEGENDARY · 8–24 Tai -->
+        <div class="tier-header" data-category="legendary">
+          <span class="tier-label">Legendary · 8–24 Tai</span>
+          <div class="tier-rule"></div>
+        </div>
+
+        <div class="hand-card" data-category="legendary" data-search="earth ready di ting 8 tai migi">
+          <div class="hand-top">
+            <div>
+              <div class="hand-name">Earth Ready</div>
+              <div class="hand-chinese">地聽 · Dì Tīng</div>
+            </div>
+            <div class="tai tai-high">8 Tai</div>
+          </div>
+          <div class="hand-desc">
+            Ready hand within two turns (8 tiles) with no claims made. Must announce ready; cannot change waits or pass on a winning tile after declaring.
+          </div>
+        </div>
+
+        <div class="hand-card" data-category="legendary" data-search="earth win di hu non dealer first draw 16 tai">
+          <div class="hand-top">
+            <div>
+              <div class="hand-name">Earth Win</div>
               <div class="hand-chinese">地胡 · Dì Hú</div>
             </div>
             <div class="tai tai-high">16 Tai</div>
           </div>
           <div class="hand-desc">
-            Non-dealer wins with their initial hand plus their first draw.
+            Non-dealer wins by self-draw before discarding any tile (on the initial deal).
           </div>
         </div>
 
-        <div class="hand-card" data-search="heavenly hand tian hu dealer initial deal instant win 24 tai">
+        <div class="hand-card" data-category="legendary" data-search="heaven win tian hu dealer initial deal 24 tai">
           <div class="hand-top">
             <div>
-              <div class="hand-name">Heavenly Hand</div>
+              <div class="hand-name">Heaven Win</div>
               <div class="hand-chinese">天胡 · Tiān Hú</div>
             </div>
             <div class="tai tai-high">24 Tai</div>
           </div>
           <div class="hand-desc">
-            Dealer wins with their initial hand of 17 tiles. No draws needed.
+            Dealer wins by self-draw on the initial deal before discarding.
           </div>
         </div>
+
       </div>
     </div>
+
 
     <!-- ════════════════════════════════════════
      PAGE: PAYOUT CALCULATOR
@@ -1401,6 +1401,19 @@
         document.querySelectorAll(".rules-panel").forEach(p => p.classList.remove("active"));
         document.getElementById("tab-" + id).classList.add("active");
         document.getElementById("panel-" + id).classList.add("active");
+      }
+
+      /* ── Hand filters ──────────────────────────── */
+      function filterHands(category) {
+        document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+        event.target.classList.add("active");
+        document.querySelectorAll("#page-hands .hand-card, #page-hands .tier-header").forEach(el => {
+          if (category === "all" || el.dataset.category === category) {
+            el.style.display = "";
+          } else {
+            el.style.display = "none";
+          }
+        });
       }
 
       /* ── Page routing ──────────────────────────── */
