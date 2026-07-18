@@ -177,18 +177,24 @@
                 The Wall <span class="tag tag-gray">牌牆 Pái Qiáng</span>
               </div>
               <div class="rule-body">
-                Tiles are shuffled face-down and arranged into a square wall,
-                each side 18 tiles long and 2 tiles high. Each player's wall
-                segment connects on the right end to the next player's wall; the
-                left end stays open. The dealer rolls <strong>3 dice</strong>.
-                The total determines which player's wall to break, counting
-                counter-clockwise from the dealer. That player counts that many
-                stacks from the right end of their wall and splits it there. The
-                side you counted from becomes the <strong>tail</strong>. The
-                other side is the <strong>draw wall</strong>. Each player is
-                dealt <strong>16 tiles</strong> in batches of 4, starting with
-                the dealer. If you start with any flowers, draw the replacement
-                tiles in order from the dealer.
+                <p>
+                  Tiles are shuffled face-down and arranged into a square wall,
+                  each side 18 tiles long and 2 tiles high. Each player's wall
+                  segment connects on the right end to the next player's wall;
+                  the left end stays open.
+                </p>
+                <p>
+                  The dealer rolls <strong>3 dice</strong>. The total determines
+                  which player's wall to break, counting counter-clockwise from
+                  the dealer. That player counts that many stacks from the right
+                  end of their wall and splits it there. The side you counted
+                  from becomes the <strong>tail</strong>, represented by moving 2
+                  stacked tiles on top. The other side is the
+                  <strong>draw wall</strong>. Each player is dealt
+                  <strong>16 tiles</strong> in batches of 4, starting with the
+                  dealer. If you start with any flowers, draw the replacement
+                  tiles in order from the dealer.
+                </p>
               </div>
             </div>
           </div>
@@ -413,10 +419,10 @@
 
             <div
               class="rule-row"
-              data-search="discard win fang chong single player pays full"
+              data-search="discard win fang qiang single player pays full"
             >
               <div class="rule-label">
-                Win by Discard <span class="tag tag-gray">放銃 Fàng Chòng</span>
+                Win by Discard <span class="tag tag-gray">放槍 Fàng Qiāng</span>
               </div>
               <div class="rule-body">
                 The player who discards your winning tile pays the
@@ -625,17 +631,6 @@
                   <span class="tag tag-gold">+1 Tai</span>
                   <span style="font-size: 12px; color: var(--muted)">each</span>
                 </div>
-                <div class="hand-tiles" style="margin: 8px 0">
-                  <span
-                    style="
-                      margin: 0 8px 0 0;
-                      font-size: 12px;
-                      color: var(--muted);
-                    "
-                    >No flowers or seasons →</span
-                  >
-                  <span class="tag tag-gold">+1 Tai</span>
-                </div>
                 Collecting all 8 flowers can trigger a winning hand. See the
                 <span
                   style="
@@ -686,7 +681,16 @@
                 Fake Win <span class="tag tag-red">詐胡 Zhà Hú</span>
               </div>
               <div class="rule-body">
-                Declaring "Hu!" with an illegal hand or below the minimum Tai.
+                Any of these counts as a Fake Win:
+                <ul style="margin: 6px 0; padding-left: 18px">
+                  <li>Hand doesn't meet the minimum Tai</li>
+                  <li>Hand structure is illegal</li>
+                  <li>
+                    You declared a kong from a discard, then won off the
+                    replacement tile
+                  </li>
+                  <li>You declared win while under 過水 (see below)</li>
+                </ul>
                 <div class="alert alert-red" style="margin-top: 8px">
                   <div class="alert-title">Penalty</div>
                   Round ends immediately. You pay all three opponents, each
@@ -711,6 +715,32 @@
                   Hand declared dead. You cannot win or call tiles this round,
                   but must keep discarding. You still owe payment if someone
                   else wins.
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="rule-row"
+              data-search="passing tile guo shui furiten win restriction discard"
+            >
+              <div class="rule-label">
+                Passing <span class="tag tag-red">過水 Guò Shuǐ</span>
+              </div>
+              <div class="rule-body">
+                <p>
+                  If you see a tile that would complete your hand but choose not
+                  to claim it, you are "in 過水" and temporarily locked out of
+                  winning.
+                </p>
+                <p><strong>How to clear it:</strong> draw a tile that does
+                  <em>not</em> complete your hand, then discard. After that,
+                  you can win again normally.</p>
+                <p><strong>Edge case:</strong> if you keep drawing tiles that
+                  complete your hand and discarding them, 過水 stays active
+                  until you finally draw one that doesn't.</p>
+                <div class="alert alert-red" style="margin-top: 8px">
+                  <div class="alert-title">Penalty</div>
+                  Declaring win while in 過水 is a Fake Win (詐胡).
                 </div>
               </div>
             </div>
@@ -787,7 +817,7 @@
               <div class="hand-name">Dealer</div>
               <div class="hand-chinese">莊家 · Zhuāng Jiā</div>
             </div>
-            <div class="tai tai-std">1 Tai</div>
+            <div class="tai tai-std">2N+1 Tai</div>
           </div>
           <div class="hand-desc">
             The dealer scores an extra Tai whether winning or dealing in.
@@ -871,14 +901,14 @@
         <div
           class="hand-card"
           data-category="situational"
-          data-search="fully exposed all melded quan qiu ren 1 tai"
+          data-search="fully exposed all melded quan qiu ren 2 tai"
         >
           <div class="hand-top">
             <div>
               <div class="hand-name">Fully Exposed Hand</div>
               <div class="hand-chinese">全求人 · Quán Qiú Rén</div>
             </div>
-            <div class="tai tai-std">1 Tai</div>
+            <div class="tai tai-std">2 Tai</div>
           </div>
           <div class="hand-desc">
             Entire hand claimed through chows and pongs, and the win is not
@@ -941,18 +971,21 @@
         <div
           class="hand-card"
           data-category="situational"
-          data-search="kong bloom gang shang zi mo replacement 2 tai"
+          data-search="kong bloom gang shang kai hua replacement 1 tai"
         >
           <div class="hand-top">
             <div>
               <div class="hand-name">Kong Bloom</div>
-              <div class="hand-chinese">槓上自摸 · Gàng Shàng Zì Mō</div>
+              <div class="hand-chinese">槓上開花 · Gàng Shàng Kāi Huā</div>
             </div>
-            <div class="tai tai-std">2 Tai</div>
+            <div class="tai tai-std">1 Tai</div>
           </div>
           <div class="hand-desc">
-            Self-drawing a winning tile on the replacement draw after declaring
-            a flower, adding to a kong, or concealed kong. Includes Self-Draw.
+            Win on the replacement tile drawn after declaring a kong or flower.
+            Self-Draw (自摸) is counted separately.
+            <br /><strong>Exception:</strong> if you formed the kong from an
+            opponent's discard, you cannot win off the replacement tile — doing
+            so is a Fake Win.
           </div>
         </div>
 
@@ -993,8 +1026,9 @@
             <div class="tai tai-std">2 Tai</div>
           </div>
           <div class="hand-desc">
-            No honor tiles, no flower tiles, no triplets, not a single-wait, not
-            self-drawn, must be waiting on both ends.
+            No honor tiles anywhere (not even as the pair), no flower tiles, no
+            triplets, not a single-wait, not self-drawn, must be waiting on both
+            ends.
           </div>
           <div class="hand-example">
             <div class="hand-example-label">Example</div>
@@ -1715,42 +1749,6 @@
         <div
           class="hand-card"
           data-category="flowers"
-          data-search="flower kong all four set season plant 1 tai"
-        >
-          <div class="hand-top">
-            <div>
-              <div class="hand-name">Flower Kong</div>
-              <div class="hand-chinese">花槓 · Huā Gàng</div>
-            </div>
-            <div class="tai tai-std">1 Tai</div>
-          </div>
-          <div class="hand-desc">
-            Holding all four of either the season set (春夏秋冬) or the plant
-            set (梅蘭菊竹).
-          </div>
-          <div class="hand-example">
-            <div class="hand-example-label">Example</div>
-            <div class="hand-tiles">
-              <div class="meld-group">
-                <div class="t flower">梅</div>
-                <div class="t flower">蘭</div>
-                <div class="t flower">菊</div>
-                <div class="t flower">竹</div>
-              </div>
-              <div class="meld-sep"></div>
-              <div class="meld-group">
-                <div class="t season">春</div>
-                <div class="t season">夏</div>
-                <div class="t season">秋</div>
-                <div class="t season">冬</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div
-          class="hand-card"
-          data-category="flowers"
           data-search="seven rob one qi qiang yi 8 tai flowers"
         >
           <div class="hand-top">
@@ -1819,9 +1817,27 @@
             <div class="tai tai-high">8 Tai</div>
           </div>
           <div class="hand-desc">
-            Ready hand within two turns (8 tiles) with no claims made. Must
-            announce ready; cannot change waits or pass on a winning tile after
-            declaring.
+            Declaring ready within the first 8 discards while your hand is
+            still closed (no claims made). Cannot change waits or pass on a
+            winning tile after declaring.
+          </div>
+        </div>
+
+        <div
+          class="hand-card"
+          data-category="legendary"
+          data-search="human win ren hu non dealer discard first round 8 tai"
+        >
+          <div class="hand-top">
+            <div>
+              <div class="hand-name">Human Win</div>
+              <div class="hand-chinese">人胡 · Rén Hú</div>
+            </div>
+            <div class="tai tai-high">8 Tai</div>
+          </div>
+          <div class="hand-desc">
+            Non-dealer wins with a discard in the first round of play before
+            anyone else chis or pengs.
           </div>
         </div>
 
@@ -2058,6 +2074,7 @@
 
       /* ── Search ────────────────────────────────── */
       const searchIndex = [];
+      let lastHits = [];
 
       function buildIndex() {
         document.querySelectorAll("[data-search]").forEach((el) => {
@@ -2122,41 +2139,63 @@
           (hits.length !== 1 ? "s" : "") +
           "</div>" +
           hits
-            .map((h) => {
+            .map((h, i) => {
               const snip = (h.body || h.keywords).slice(0, 110);
-              return `<div class="search-hit" onclick="jumpTo('${h.page}',this)">
+              return `<div class="search-hit" onclick="jumpTo(${i})" data-hit-idx="${i}">
           <div class="search-hit-tag">${labels[h.page] || h.page}</div>
-          <div class="search-hit-title">${hl(h.title.replace(/[^\x00-\x7F]/g, "").trim() || h.title, terms)}</div>
+          <div class="search-hit-title">${hl(h.title.replace(/[　-鿿豈-﫿]/g, "").trim() || h.title, terms)}</div>
           <div class="search-hit-snippet">${hl(snip, terms)}${snip.length === 110 ? "…" : ""}</div>
         </div>`;
             })
             .join("");
+        lastHits = hits;
         res.classList.add("visible");
       }
 
-      function jumpTo(pageId, hitEl) {
-        const title = hitEl
-          .querySelector(".search-hit-title")
-          .textContent.trim();
+      function jumpTo(idx) {
+        const hit = lastHits[idx];
+        if (!hit) return;
+        const el = hit.el;
+        const pageId = hit.page;
         clearSearch();
-        showPage(pageId);
-        setTimeout(() => {
-          const cards = document.querySelectorAll(
-            "#page-" + pageId + " [data-search]",
-          );
-          for (const c of cards) {
-            const ct = (
-              c.querySelector(".rule-label, .hand-name")?.textContent || ""
-            )
-              .replace(/[^\x00-\x7F]/g, "")
-              .trim();
-            if (ct && title.includes(ct.slice(0, 12))) {
-              c.scrollIntoView({ behavior: "smooth", block: "center" });
-              c.style.outline = "2px solid #888";
-              setTimeout(() => (c.style.outline = ""), 1400);
-              break;
-            }
+
+        // Activate the correct page
+        document
+          .querySelectorAll(".page")
+          .forEach((p) => p.classList.remove("active"));
+        document
+          .querySelectorAll(".nav-btn")
+          .forEach((b) => b.classList.remove("active"));
+        document.getElementById("page-" + pageId).classList.add("active");
+        document.getElementById("nav-" + pageId).classList.add("active");
+
+        // Activate correct rules sub-tab if on core page
+        if (pageId === "core") {
+          const panel = el.closest(".rules-panel");
+          if (panel) {
+            const tabId = panel.id.replace("panel-", "");
+            showRulesTab(tabId);
           }
+        }
+
+        // Reset hand filters so target card is visible
+        if (pageId === "hands") {
+          document
+            .querySelectorAll(".filter-btn")
+            .forEach((b) => b.classList.remove("active"));
+          document.querySelector(".filter-btn").classList.add("active");
+          document
+            .querySelectorAll(
+              "#page-hands .hand-card, #page-hands .tier-header",
+            )
+            .forEach((c) => (c.style.display = ""));
+        }
+
+        // Scroll to element and highlight
+        setTimeout(() => {
+          el.scrollIntoView({ behavior: "smooth", block: "center" });
+          el.style.outline = "2px solid #888";
+          setTimeout(() => (el.style.outline = ""), 1400);
         }, 80);
       }
 

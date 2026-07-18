@@ -361,6 +361,12 @@ mark {
   border-left: 1px solid var(--border);
   padding-left: 16px;
 }
+.rule-body p {
+  margin: 0 0 10px;
+}
+.rule-body p:last-child {
+  margin-bottom: 0;
+}
 .rule-body strong {
   color: var(--text);
   font-weight: 600;
